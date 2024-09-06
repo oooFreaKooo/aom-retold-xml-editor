@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-3-bootstrap-5-starter",
+  "name": "aom-retold-xml-editor",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -8,16 +8,17 @@
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "fibers": "^5.0.0",
-    "nuxt3": "latest",
-    "postcss": "^8.4.5",
-    "postcss-loader": "^6.2.1",
-    "sass": "^1.48.0",
-    "sass-loader": "^12.4.0"
+    "nuxt": "^3.13.1",
+    "postcss": "^8.4.45",
+    "postcss-loader": "^8.1.1",
+    "sass": "1.77.6",
+    "sass-loader": "^12.4.0",
+    "typescript": "^5.5.4",
+    "vue-tsc": "^2.1.6"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.7",
-    "bootstrap": "^5.2.3"
+    "@nuxt/image": "^1.8.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
   }
 }
