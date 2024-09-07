@@ -35,22 +35,10 @@ export default defineNuxtConfig({
       },
     },
   },
-  nitro: {
-    esbuild: {
-      options: {
-        target: "esnext",
-      },
-    },
-  },
   app: {
     baseURL: "/",
     head: {
       meta: [{ charset: "utf-8" }],
     },
-  },
-  experimental: {
-    payloadExtraction: false,
-    typedPages: false,
-    watcher: "parcel",
   },
 })
