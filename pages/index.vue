@@ -1,16 +1,14 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center">
-    <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
-      <div class="row bg-theme p-2">
-        <!-- Use col-sm-12 for small screens and col-md-6 for medium and larger screens -->
-        <div class="col-sm-12 col-md-6">
-          <FormBasicInformationForm />
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <FormBasicInformationForm />
-        </div>
-        <FormUnitType />
-      </div>
+  <div class="row bg-theme p-2">
+    <!-- Use col-sm-12 for small screens and col-md-6 for medium and larger screens -->
+    <div class="col-sm-12 col-md-6">
+      <FormBasicInformationForm />
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <FormBasicInformationForm />
+    </div>
+    <div class="col-12">
+      <FormUnitType />
     </div>
   </div>
 </template>

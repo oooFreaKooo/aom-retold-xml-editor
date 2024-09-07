@@ -1,7 +1,9 @@
 <template>
-  <div class="vh-100">
-    <Header />
-    <NuxtPage />
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+      <Header />
+      <NuxtPage />
+    </div>
   </div>
 </template>
 

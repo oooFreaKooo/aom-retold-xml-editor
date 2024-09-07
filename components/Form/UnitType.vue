@@ -1,53 +1,49 @@
 <template>
-  <div class="neumorphic-container my-3">
-    <!-- Main Button to toggle all categories -->
-    <button class="btn neumorphic-btn w-100 mb-3" :class="{ active: isMainOpen }" @click="toggleMain">Unit Types</button>
+  <div class="neumorphic-container my-2">
+    <!-- Left Sidebar: Category and Search -->
+    <div class="row">
+      <!-- Sidebar for searching and filtering by category -->
+      <div class="col-md-4">
+        <div class="filter-container">
+          <input
+            type="text"
+            v-model="searchQuery"
+            @input="filterUnitTypes"
+            placeholder="Search unit types..."
+            class="form-control neumorphic-input"
+          />
+          <div class="category-filter my-2">
+            <button
+              v-for="category in Object.keys(categorizedUnitTypes)"
+              :key="category"
+              @click="selectCategory(category as Category)"
+              :class="{ active: activeCategory === category }"
+              class="neumorphic-btn w-100"
+            >
+              {{ category }}
+            </button>
+          </div>
 
-    <!-- Wrapper for the three-column layout -->
-    <div class="collapse" :class="{ show: isMainOpen }">
-      <div class="row">
-        <!-- Logical Types Column -->
-        <div class="col-12 col-md-4 mb-4">
-          <button class="btn neumorphic-btn w-100 mb-2" :class="{ active: activeCategories['Logical'] }" @click="toggleCategory('Logical')">
-            Logical Types
-          </button>
-          <div class="py-2 collapse" :class="{ show: activeCategories['Logical'] }">
-            <div v-for="(type, index) in categorizedUnitTypes.Logical" :key="`logical_${index}`" class="form-check mb-2">
-              <input type="checkbox" class="form-check-input" :id="`logicalType_${type}`" :value="type" v-model="selectedUnitTypes" />
-              <label class="form-check-label" :for="`logicalType_${type}`">
-                {{ type }}
-              </label>
+          <!-- Display filtered types for the selected category -->
+          <div class="filtered-types-list">
+            <div
+              v-for="(type, index) in filteredUnitTypes"
+              :key="index"
+              class="filtered-type"
+              @click="addType(type)"
+            >
+              {{ type }}
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Abstract Types Column -->
-        <div class="col-12 col-md-4 mb-4">
-          <button class="btn neumorphic-btn w-100 mb-2" :class="{ active: activeCategories['Abstract'] }" @click="toggleCategory('Abstract')">
-            Abstract Types
-          </button>
-          <div class="py-2 collapse" :class="{ show: activeCategories['Abstract'] }">
-            <div v-for="(type, index) in categorizedUnitTypes.Abstract" :key="`abstract_${index}`" class="form-check mb-2">
-              <input type="checkbox" class="form-check-input" :id="`abstractType_${type}`" :value="type" v-model="selectedUnitTypes" />
-              <label class="form-check-label" :for="`abstractType_${type}`">
-                {{ type }}
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Other Types Column -->
-        <div class="col-12 col-md-4 mb-4">
-          <button class="btn neumorphic-btn w-100 mb-2" :class="{ active: activeCategories['Others'] }" @click="toggleCategory('Others')">
-            Other Types
-          </button>
-          <div class="p-3 collapse" :class="{ show: activeCategories['Others'] }">
-            <div v-for="(type, index) in categorizedUnitTypes.Others" :key="`other_${index}`" class="form-check mb-2">
-              <input type="checkbox" class="form-check-input" :id="`otherType_${type}`" :value="type" v-model="selectedUnitTypes" />
-              <label class="form-check-label" :for="`otherType_${type}`">
-                {{ type }}
-              </label>
-            </div>
+      <!-- Right Side: Selected types as tags -->
+      <div class="col-md-8">
+        <div class="selected-types-container">
+          <div v-for="(type, index) in selectedUnitTypes" :key="index" class="selected-tag">
+            {{ type }}
+            <button @click="removeType(type)" class="remove-tag-btn">&times;</button>
           </div>
         </div>
       </div>
@@ -57,8 +53,8 @@
 
 <script lang="ts" setup>
 // Define a union type for category keys
-type Category = "Logical" | "Abstract" | "Others"
-// Categorizing the unit types into Logical, Abstract, and Others
+type Category = "All" | "Logical" | "Abstract" | "Other"
+// Categorizing the unit types into Logical, Abstract, and Other
 const categorizedUnitTypes = ref({
   Logical: [
     "LogicalTypeValidTraitorTarget",
@@ -166,7 +162,7 @@ const categorizedUnitTypes = ref({
     "AbstractOracle",
     "AbstractMarket",
   ],
-  Others: [
+  Other: [
     "Herdable",
     "Unit",
     "NatureClass",
@@ -222,29 +218,87 @@ const categorizedUnitTypes = ref({
     "HumanSoldier",
     "AnimalPredator",
   ],
+  All: ['Herdable', 'LogicalTypeValidTraitorTarget', 'LogicalTypeVillagersAttackResponse', 'LogicalTypeValidMeteorTarget', 'Unit', 'NatureClass', 'HuntedResource', 'EconomicUnit',
+                  'WoodDropsite', 'LogicalTypeNorseSoldierThatBuilds', 'AbstractWonder', 'LogicalTypeRangedUnitsAutoAttack', 'AbstractTower', 'AnimalOfSet', 'LogicalTypeFindWoodDropsite',
+                  'LogicalTypeShipNotHero', 'LogicalTypeValidFrostTarget', 'AffectedByTownBell', 'BuildLimitSharedNorse', 'Socket', 'TradeableFrom', 'InfantryLineUpgraded', 'HerdableMagnet',
+                  'TradeUnit', 'AbstractWall', 'LogicalTypeLandMilitary', 'AbstractPharaoh', 'AbstractCloseCombatShip', 'LogicalTypeBuildingNotWonderOrTitan', 'Ranged',
+                  'LogicalTypeValidShockwaveTarget', 'AnimalReactive', 'LogicalTypeHandUnitsAttack', 'LogicalTypeHeroicMythUnit', 'AbstractSocketedTownCenter', 'BuildingClass',
+                  'LogicalTypeBuildingEmpoweredForLOS', 'LogicalTypeNeededForVictory', 'LogicalTypeParticipatesInBattlecries', 'LogicalTypeAutoAttackFocusBuildings', 'EmbellishmentClass', 'Nature',
+                  'LogicalTypeFreezableMythUnit', 'LogicalTypeTeleporterBuilding', 'AbstractArcherShip', 'ValidIdleVillager', 'LogicalTypeMythUnitNotFlying', 'AbstractWarshipHero', 'GoldDropsite',
+                  'LogicalTypeEasySelectAvoid', 'LogicalTypeAffectedByCeaseFireBuildingSlow', 'LogicalTypeMinimapFilterEconomic', 'MilitaryUnit', 'LogicalTypeUnitIsConstructed',
+                  'LogicalTypeValidLocustSwarmTarget', 'LogicalTypeVillagersAttack', 'Transport', 'MythUnitMelee', 'Ship', 'FishResource', 'AbstractFishingShip',
+                  'LogicalTypeMythUnitThatGeneratesFavor', 'NonConvertableHerdable', 'AbstractWalkingWoods', 'FoodDropsite', 'TradeableTo', 'MythUnitSiege', 'LogicalTypeFindBarracks',
+                  'AbstractVillager', 'CavalryLineUpgraded', 'AbstractTransportShip', 'BuildLimitSharedAtlantean', 'LogicalTypeAffectedByValor', 'MythUnitCavalry', 'LogicalTypeValidSentinelTarget',
+                  'ArcherLineUpgraded', 'LogicalTypeFindGoldDropsite', 'CountsTowardMilitaryScore', 'Building', 'LogicalTypeAgressiveNatureUnit', 'MythUnit', 'HeroShadowUpgraded', 'AbstractScout',
+                  'AbstractTitan', 'VillagerHero', 'MinorHero', 'UnitClass', 'LogicalTypeArchaicMythUnit', 'LogicalTypeValidSpyTarget', 'WildCrops', 'LogicalTypeVillagersRespondToAttack',
+                  'LogicalTypeBuildingsThatShoot', 'LogicalTypeSeidrTarget', 'AbstractFarm', 'AbstractFortress', 'AbstractArmory', 'AbstractInvisibleWall', 'Dropsite', 'LogicalTypeBuildingsNotWalls',
+                  'LogicalTypeClassicalMythUnit', 'LogicalTypeVillagerNotHero', 'Resource', 'LogicalTypeAgeUpBuilding', 'LogicalTypeValidTornadoAttack', 'GoldResource', 'AnimalPrey',
+                  'LogicalTypeConvertsHerds', 'AbstractDock', 'AbstractHealer', 'EconomicUpgraded', 'LogicalTypeAffectedByValleyOfTheKings', 'Huntable', 'AbstractGullinbursti',
+                  'AbstractHouseBuildLimit', 'LogicalTypeTartarianGateValidOverlapPlacement', 'LogicalTypeValidShiftingSandsTarget', 'MythUnitRanged', 'LogicalTypeAffectedByRestoration',
+                  'LogicalTypeRangedMythUnit', 'AbstractCavalry', 'LogicalTypeSunRayProjectile', 'LogicalTypeValidBoltTarget', 'AbstractDwarf', 'LogicalTypeTCBuildLimit', 'Unattackable',
+                  'LogicalTypeHealed', 'DisplayQueue', 'LogicalTypeSharedHeroSelection', 'LogicalTypeRangedUnitsAttack', 'AbstractFlyingUnit', 'AbstractArcher', 'LogicalTypeHandUnitsAutoAttack',
+                  'AbstractSiegeShip', 'Hero', 'LogicalTypeMythUnitNotTitan', 'NavalUnit', 'LogicalTypeEarthquakeAttack', 'AbstractTemple', 'AbstractMonument', 'MajorHero', 'AbstractSiegeWeapon',
+                  'LogicalTypeValidSPCUnitsDeadCondition', 'MilitaryBuilding', 'AbstractWarship', 'Tree', 'AbstractTownCenter', 'LogicalTypeMilitaryProductionBuilding',
+                  'LogicalTypeMinimapFilterMilitary', 'LogicalTypeFindFoodDropsite', 'AbstractInfantry', 'LogicalTypeNavalMilitary', 'HumanSoldier', 'Projectile', 'AbstractEmpowerer',
+                  'LogicalTypeGarrisonInShips', 'AbstractSettlement', 'LogicalTypeBuildingThatCanBeEmpowered', 'LogicalTypeFindStable', 'CountsTowardEconomicScore', 'LogicalTypePickable',
+                  'AbstractOracle', 'AbstractMarket', 'AnimalPredator', 'LogicalTypeMythicMythUnit']
 })
-
-// State to toggle the main wrapper
-const isMainOpen = ref(false)
-
-// State to toggle individual categories
-const activeCategories = ref<Record<Category, boolean>>({
-  Logical: false,
-  Abstract: false,
-  Others: false,
-})
-
-// Track selected unit types
-const selectedUnitTypes = ref<string[]>([])
-
-// Toggle the main unit types section
-const toggleMain = () => {
-  isMainOpen.value = !isMainOpen.value
+// Computed property to dynamically fill the "All" category
+const fillAllCategory = () => {
+  categorizedUnitTypes.value.All = Object.entries(categorizedUnitTypes.value)
+    .filter(([key]) => key !== 'All')  // Filter out the 'All' key
+    .flatMap(([_, types]) => types)    // Flatten the array of types
 }
 
-// Toggle individual categories
-const toggleCategory = (category: Category) => {
-  activeCategories.value[category] = !activeCategories.value[category]
+
+// Fill "All" on initial load
+fillAllCategory()
+
+// Reactive state for selected unit types (tags)
+const selectedUnitTypes = ref<string[]>([])
+
+// Reactive state for the search input
+const searchQuery = ref<string>("")
+
+// Reactive state for active category
+const activeCategory = ref<Category>("Logical") // Explicitly typed as 'Category'
+
+// Filtered list of unit types based on search input and category
+const filteredUnitTypes = ref<string[]>([])
+
+// Filter unit types when the user types or selects a category
+const filterUnitTypes = () => {
+  // If there's a search query, switch to "All" category
+  if (searchQuery.value) {
+    activeCategory.value = "All"
+  }
+
+  const allTypes = categorizedUnitTypes.value[activeCategory.value]
+  if (searchQuery.value) {
+    filteredUnitTypes.value = allTypes.filter((type) =>
+      type.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  } else {
+    filteredUnitTypes.value = allTypes
+  }
+}
+
+// Select a category to filter by
+const selectCategory = (category: Category) => {
+  activeCategory.value = category
+  filterUnitTypes()
+}
+
+// Add a new type to the selected tags
+const addType = (type: string) => {
+  if (type && !selectedUnitTypes.value.includes(type)) {
+    selectedUnitTypes.value.push(type)
+  }
+}
+
+// Remove a type from the selected tags
+const removeType = (type: string) => {
+  selectedUnitTypes.value = selectedUnitTypes.value.filter((t) => t !== type)
 }
 </script>
 
@@ -252,30 +306,57 @@ const toggleCategory = (category: Category) => {
 $bg-color: #e0e5ec;
 $shadow-light: #ffffff;
 $shadow-dark: #a3b1c6;
-$primary-color: #ff4136;
+$primary-color: #421715;
 $text-color: #4a4a4a;
 $highlight-color: #ffffff;
 $shadow-color: #babecc;
 
 .neumorphic-container {
   background: $bg-color;
-  border-radius: 15px; // Smaller border radius
-  box-shadow: 5px 5px 10px $shadow-dark, -5px -5px 10px $shadow-light; // Smaller shadow
-  padding: 15px; // Reduced padding
+  border-radius: 15px; // Smaller border-radius
+  box-shadow: 6px 6px 12px $shadow-dark, -6px -6px 12px $shadow-light; // Smaller shadow
+  padding: 10px; // Smaller padding
+}
+
+.neumorphic-input {
+  background: $bg-color;
+  color: $text-color;
+  border: none;
+  border-radius: 8px; // Smaller border-radius
+  padding: 6px 10px; // Smaller padding for input
+  font-size: 12px; // Smaller font size
+  box-shadow: inset 3px 3px 7px $shadow-dark, inset -3px -3px 7px $shadow-light; // Smaller shadows
+  width: 100%;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.type-input {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.category-filter {
+  display: flex;
+  gap: 10px;
 }
 
 .neumorphic-btn {
   background: $bg-color;
   color: $text-color;
-  border-radius: 15px;
-  font-size: 14px;
-  padding: 8px 12px;
-  box-shadow: 5px 5px 10px $shadow-dark, -5px -5px 10px $shadow-light;
+  border-radius: 15px; // Smaller border-radius
+  font-size: 14px; // Smaller font-size
+  padding: 8px 12px; // Smaller padding
+  box-shadow: 6px 6px 12px $shadow-color, -6px -6px 12px $highlight-color; // Smaller shadow
+
   transition: all 0.2s ease;
 
   &:hover {
     transform: scale(1.01);
-    box-shadow: 4px 4px 8px $shadow-dark, -4px -4px 8px $shadow-light;
+    box-shadow: 8px 8px 16px $shadow-color, -8px -8px 16px $highlight-color;
   }
 
   &:active,
@@ -285,54 +366,45 @@ $shadow-color: #babecc;
   }
 }
 
-.neumorphic-content {
-  background: $bg-color;
-  border-radius: 15x; // Reduced border-radius
-  box-shadow: inset 4px 4px 8px $shadow-dark, inset -4px -4px 8px $shadow-light; // Smaller inset shadow
-  padding: 10px; // Reduced padding for content
+.filtered-types-list {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: $bg-color;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px $shadow-dark, -5px -5px 10px $shadow-light;
 }
 
-.form-check-input {
-  display: none;
+.filtered-type {
+  padding: 10px;
+  cursor: pointer;
 
-  & + .form-check-label {
-    position: relative;
-    padding-left: 30px; // Smaller padding
-    font-size: 14px; // Smaller font size
-    cursor: pointer;
-
-    &::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 20px; // Smaller size for checkbox
-      height: 20px; // Smaller size for checkbox
-      border-radius: 5px;
-      background: $bg-color;
-      box-shadow: inset 3px 3px 7px $shadow-dark, inset -3px -3px 7px $shadow-light; // Smaller shadow for checkbox
-    }
-  }
-
-  &:checked + .form-check-label::after {
-    content: "✔";
-    position: absolute;
-    left: 5px; // Adjusted for smaller checkbox
-    top: 1px; // Adjusted for smaller checkbox
-    color: $primary-color;
-    font-size: 14px; // Smaller checkmark size
-    font-weight: bold;
+  &:hover {
+    background-color: #f0f0f0;
   }
 }
 
-.collapse {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out; // Faster transition
+.selected-types-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-  &.show {
-    max-height: 100%;
-  }
+.selected-tag {
+  background-color: $primary-color;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.remove-tag-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 </style>
 

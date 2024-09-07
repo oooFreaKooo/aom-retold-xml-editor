@@ -3,7 +3,7 @@
     <NuxtImg src="/header.webp" alt="Header Image" class="header-background" format="webp" />
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">AoM Retold - XML Editor</a>
+        <a class="navbar-brand" href="#">XML - Unit Editor</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -23,7 +23,7 @@
               <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Penis</a>
+              <a class="nav-link" href="#">Tools</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
@@ -42,7 +42,7 @@
 .custom-header {
   position: relative;
   height: 50vh;
-  display: grid;
+  display: flex;
   align-items: center;
   justify-content: center;
   color: white;
@@ -109,7 +109,6 @@
   width: 100%;
 }
 
-/* Ensure the header has margin from the rest of the content */
 header {
   margin-bottom: 50px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2 neumorphic-container">
+  <div class="my-2">
     <!-- Button to toggle form visibility -->
     <button class="btn neumorphic-btn w-100 mb-2" :class="{ active: isOpen }" @click="toggleForm">Basic Information</button>
 
