@@ -4,10 +4,13 @@
       <BasicInformation />
     </VCol>
     <VCol cols="12" md="6">
-      <BasicInformation />
+      <MovementInformation />
     </VCol>
     <VCol cols="12">
       <UnitType />
+    </VCol>
+    <VCol cols="12">
+      <UnitFlag />
     </VCol>
   </VRow>
 </template>

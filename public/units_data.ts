@@ -668,7 +668,7 @@ export interface SharedSelectionUnitTypes {
 }
 
 export type ResourceType = "Favor" | "Food" | "Gold" | "Wood"
-
+export type MovementType = "amphibious" | "land" | "water" | "air"
 export interface Unit {
   name: string
   displaynameid: string

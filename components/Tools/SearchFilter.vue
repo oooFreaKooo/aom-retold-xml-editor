@@ -16,8 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue"
-
 type Category = "All" | "Logical" | "Abstract" | "Other"
 
 const props = defineProps({
