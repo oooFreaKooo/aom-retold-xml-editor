@@ -667,17 +667,10 @@ export interface SharedSelectionUnitTypes {
   VillageCenter: string
 }
 
-export interface ResourceType {
-  Favor: string
-  Food: string
-  Gold: string
-  Wood: string
-}
+export type ResourceType = "Favor" | "Food" | "Gold" | "Wood"
 
 export interface Unit {
-  attributes: {
-    name: string
-  }
+  name: string
   displaynameid: string
   animfile: string
   obstructionradiusx: number
