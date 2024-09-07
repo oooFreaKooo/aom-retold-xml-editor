@@ -1,11 +1,12 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center">
-    <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
-      <Header />
+  <VApp>
+    <NuxtLayout>
       <NuxtPage />
-    </div>
-  </div>
+    </NuxtLayout>
+  </VApp>
 </template>
+
+<script setup lang="ts"></script>
 
 <!-- <div class="d-flex justify-content-center bg-theme1 p-3">
   <h1 class="text-white d-inline-block">Ready to build something awesome!&nbsp;</h1>

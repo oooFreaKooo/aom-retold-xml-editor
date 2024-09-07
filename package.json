@@ -17,8 +17,8 @@
     "vue-tsc": "^2.1.6"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@nuxt/image": "^1.8.0",
-    "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3"
+    "vuetify-nuxt-module": "^0.18.2"
   }
 }

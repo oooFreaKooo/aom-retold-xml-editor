@@ -13,18 +13,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import Form from "~/components/Form.vue"
-import type { Unit } from "~/public/units_data"
-
-// Define the props and ensure units is an array
-const props = defineProps({
-  units: {
-    type: Array as PropType<Unit[]>, // Ensure it's an array of Unit
-    required: true,
-  },
-})
-</script>
+<script setup lang="ts"></script>
 
 <!--      
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
