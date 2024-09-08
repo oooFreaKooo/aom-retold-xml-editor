@@ -1,10 +1,10 @@
 <template>
-  <VVirtualScroll :key="virtualScrollKey" class="border" :items="hideSelected ? filteredAndUnselectedUnitTypes : filteredUnitTypes" height="300">
+  <VVirtualScroll class="border" :items="hideSelected ? filteredAndUnselectedUnitTypes : filteredUnitTypes" height="300">
     <template v-slot:default="{ item }">
       <VListItem
         :key="item as PropertyKey"
-        @click="$emit('add-type', item)"
-        :disabled="selectedUnitTypes?.includes(item) && !hideSelected ? true : false">
+        @click="selectedUnitTypes?.includes(item) ? $emit('remove-type', item) : $emit('add-type', item)"
+        :append-icon="selectedUnitTypes?.includes(item) && !hideSelected ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'">
         {{ item }}
       </VListItem>
     </template>

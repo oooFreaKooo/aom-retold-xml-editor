@@ -14,23 +14,27 @@
               :filtered-unit-types="filteredUnitTypes"
               :selected-unit-types="selectedUnitTypes"
               :hide-selected="hideSelected"
-              @add-type="addType" />
+              @add-type="addType"
+              @remove-type="removeType" />
           </VCol>
           <VCol cols="12" md="6">
             <ItemsChips :selected-unit-types="selectedUnitTypes" @remove-type="removeType" />
           </VCol>
         </VRow>
         <v-btn class="mt-2 me-2" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose"> Save </v-btn>
-        <v-btn class="mt-2 me-2" size="x-small" @click="toggleHideSelected" :rounded="false" :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />
+        <v-btn
+          class="mt-2 me-2"
+          color="secondary"
+          size="x-small"
+          @click="toggleHideSelected"
+          :rounded="false"
+          :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick } from "vue"
-
-// Props
 const props = defineProps<{ unitTypes: { unittype: string }[] }>()
 
 // Refs
