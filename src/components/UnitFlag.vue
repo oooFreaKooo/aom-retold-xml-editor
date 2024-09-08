@@ -9,33 +9,33 @@
               v-model:searchQuery="searchQuery"
               :active-category="activeCategory"
               :categorized-unit-types="categorizedFlagTypes"
+              :searchLabel="'Search flag types'"
               @select-category="selectCategory" />
-            <Scrollable :filtered-unit-types="filteredFlagTypes" @add-type="addType" />
+            <Scrollable
+              :filtered-unit-types="filteredFlagTypes"
+              :selected-unit-types="selectedFlagTypes"
+              :hide-selected="hideSelected"
+              @add-type="addType"
+              @remove-type="removeType" />
           </VCol>
           <VCol cols="12" md="6">
             <Chips :selected-unit-types="selectedFlagTypes" @remove-type="removeType" />
           </VCol>
         </VRow>
-        <v-btn class="mt-4" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose">Save</v-btn>
+        <v-btn class="mt-2 me-2" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose">Save</v-btn>
+        <v-btn
+          class="mt-2 me-2"
+          color="secondary"
+          density="comfortable"
+          @click="toggleHideSelected"
+          :rounded="false"
+          :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
 
 <script lang="ts" setup>
-type Category =
-  | "All"
-  | "Animation"
-  | "Behavior"
-  | "Movement"
-  | "Selection"
-  | "Visibility"
-  | "Combat"
-  | "Construction"
-  | "Garrison"
-  | "Conversion"
-  | "Miscellaneous"
-
 // Function to fill the "All" category
 const fillAllCategory = () => {
   categorizedFlagTypes.value.All = Object.entries(categorizedFlagTypes.value)
@@ -47,8 +47,13 @@ fillAllCategory()
 // Refs
 const selectedFlagTypes = ref<string[]>([])
 const searchQuery = ref<string>("")
-const activeCategory = ref<Category>("Animation")
+const activeCategory = ref<UnitFlagCategory>("Animation")
 const filteredFlagTypes = ref<string[]>([])
+const hideSelected = ref(false)
+
+const toggleHideSelected = () => {
+  hideSelected.value = !hideSelected.value
+}
 
 // Filter logic
 const filterFlagTypes = () => {
@@ -63,7 +68,7 @@ const filterFlagTypes = () => {
 // Watch searchQuery and trigger filterFlagTypes when it changes
 watch(searchQuery, filterFlagTypes)
 
-const selectCategory = (category: Category) => {
+const selectCategory = (category: UnitFlagCategory) => {
   activeCategory.value = category
   filterFlagTypes()
 }

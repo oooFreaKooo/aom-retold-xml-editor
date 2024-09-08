@@ -1,4 +1,4 @@
-export type UnitCategory = "Logical" | "Abstract" | "Other" | "All"
+export type UnitTypeCategory = "Logical" | "Abstract" | "Other" | "All"
 
 // Exported categorizedUnitTypes with explicit types
 export const categorizedUnitTypes = ref<{

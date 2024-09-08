@@ -1,3 +1,16 @@
+export type UnitFlagCategory =
+  | "All"
+  | "Animation"
+  | "Behavior"
+  | "Movement"
+  | "Selection"
+  | "Visibility"
+  | "Combat"
+  | "Construction"
+  | "Garrison"
+  | "Conversion"
+  | "Miscellaneous"
+
 export const categorizedFlagTypes = ref({
   Animation: [
     "FadeOutDuringDeathAnimation",

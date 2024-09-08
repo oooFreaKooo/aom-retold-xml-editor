@@ -9,6 +9,7 @@
               v-model:searchQuery="searchQuery"
               :active-category="activeCategory"
               :categorized-unit-types="categorizedUnitTypes"
+              :searchLabel="'Search unit types'"
               @select-category="selectCategory" />
             <Scrollable
               :filtered-unit-types="filteredUnitTypes"
@@ -40,32 +41,13 @@ const props = defineProps<{ unitTypes: { unittype: string }[] }>()
 // Refs
 const selectedUnitTypes = ref<string[]>([])
 const searchQuery = ref<string>("")
-const activeCategory = ref<Category>("Logical")
+const activeCategory = ref<UnitTypeCategory>("Logical")
 const filteredUnitTypes = ref<string[]>([])
 const hideSelected = ref(false)
 
 const toggleHideSelected = () => {
   hideSelected.value = !hideSelected.value
 }
-type Category = "All" | "Logical" | "Abstract" | "Other"
-
-// Watch for changes in the selected unit's unit types (props.unitTypes)
-watch(
-  () => props.unitTypes,
-  (newUnitTypes) => {
-    selectedUnitTypes.value = []
-    newUnitTypes.forEach((type) => {
-      // Here we cast `category` as `UnitCategory` to ensure it matches the expected key type
-      Object.keys(categorizedUnitTypes.value).forEach((category) => {
-        const typedCategory = category as UnitCategory
-        if (categorizedUnitTypes.value[typedCategory].includes(type.unittype) && !selectedUnitTypes.value.includes(type.unittype)) {
-          selectedUnitTypes.value.push(type.unittype)
-        }
-      })
-    })
-  },
-  { immediate: true },
-)
 
 const filterUnitTypes = () => {
   const allTypes = categorizedUnitTypes.value[activeCategory.value]
@@ -76,9 +58,7 @@ const filterUnitTypes = () => {
   }
 }
 
-watch(searchQuery, filterUnitTypes)
-
-const selectCategory = (category: Category) => {
+const selectCategory = (category: UnitTypeCategory) => {
   activeCategory.value = category
   filterUnitTypes()
 }
@@ -93,6 +73,7 @@ const removeType = (type: string) => {
   selectedUnitTypes.value = selectedUnitTypes.value.filter((t) => t !== type)
 }
 
+// Simplified saving and loading logic
 const isClient = !import.meta.env.SSR
 
 const panelOpen = ref([true])
@@ -110,6 +91,28 @@ const saveAndClose = () => {
   }
   panelOpen.value = []
 }
+
+// Watch for changes in the selected unit's unit types (props.unitTypes)
+watch(
+  () => props.unitTypes,
+  (newUnitTypes) => {
+    if (selectedUnitTypes.value.length === 0) {
+      // Only set if no selectedUnitTypes already exist
+      selectedUnitTypes.value = []
+      newUnitTypes.forEach((type) => {
+        Object.keys(categorizedUnitTypes.value).forEach((category) => {
+          const typedCategory = category as UnitTypeCategory
+          if (categorizedUnitTypes.value[typedCategory].includes(type.unittype) && !selectedUnitTypes.value.includes(type.unittype)) {
+            selectedUnitTypes.value.push(type.unittype)
+          }
+        })
+      })
+    }
+  },
+  { immediate: true },
+)
+
+watch(searchQuery, filterUnitTypes)
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,5 +1,5 @@
 <template>
-  <VTextField v-model="localSearchQuery" label="Search unit types" hide-details variant="outlined" />
+  <VTextField v-model="localSearchQuery" :label="searchLabel" hide-details variant="outlined" />
   <VList>
     <VBtn
       :variant="activeCategory === category ? 'flat' : 'outlined'"
@@ -7,8 +7,7 @@
       :rounded="false"
       :key="category"
       color="accent"
-      @click="$emit('select-category', category as Category)"
-      :value="category"
+      @click="$emit('select-category', category)"
       :active="activeCategory === category">
       {{ category }}
     </VBtn>
@@ -16,14 +15,16 @@
 </template>
 
 <script lang="ts" setup>
-type Category = "All" | "Logical" | "Abstract" | "Other"
-
 const props = defineProps({
   searchQuery: String,
   activeCategory: String,
   categorizedUnitTypes: {
     type: Object,
-    default: () => ({}),
+    required: true,
+  },
+  searchLabel: {
+    type: String,
+    default: "Search types", // default label, can be customized by parent
   },
 })
 
