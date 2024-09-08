@@ -1,19 +1,41 @@
 <template>
   <VRow class="mt-16">
     <VCol cols="12" md="6">
-      <BasicInformation />
+      <DynamicForms
+        title="Basic Information"
+        :formFields="basicInformationFields"
+        :selectedUnit="selectedUnit"
+        localStorageKey="basicInformation" />
     </VCol>
     <VCol cols="12" md="6">
-      <MovementInformation />
+      <DynamicForms
+        title="Movement Information"
+        :formFields="movementInformationFields"
+        :selectedUnit="selectedUnit"
+        localStorageKey="movementInformation" />
     </VCol>
     <VCol cols="12" md="6">
-      <UnitCombat />
+      <DynamicForms title="Combat/Stats" :formFields="unitCombatFields" :selectedUnit="selectedUnit" localStorageKey="combatInformation" />
     </VCol>
     <VCol cols="12">
-      <UnitType :unit-types="selectedUnit?.unit || []" />
+      <SelectorWithChips
+        title="Unit Types"
+        :unit-types="selectedUnit?.unit
+        .filter((item: UnitItem) => item.unittype)
+        .map((item: UnitItem) => item.unittype) || []"
+        :categorizedItems="categorizedUnitTypes"
+        searchLabel="Search unit types"
+        storageKey="selectedUnitTypes" />
     </VCol>
     <VCol cols="12">
-      <UnitFlag />
+      <SelectorWithChips
+        title="Flag Types"
+        :unit-flags="selectedUnit?.unit
+        .filter((item: UnitItem) => item.flag)
+        .map((item: UnitItem) => item.flag) || []"
+        :categorizedItems="categorizedFlagTypes"
+        searchLabel="Search flag types"
+        storageKey="selectedFlagTypes" />
     </VCol>
   </VRow>
   <div>
@@ -46,10 +68,18 @@
 </template>
 
 <script setup lang="ts">
+import SelectorWithChips from "~/components/Form/SelectorWithChips.vue"
+
 // Define Unit interface
 interface Unit {
   "unit@name": string
-  [key: string]: any // Allow dynamic keys in unit
+  [key: string]: any
+}
+
+interface UnitItem {
+  unittype?: string
+  flag?: string
+  [key: string]: any
 }
 
 const protoData = ref<Unit[] | null>(null)
@@ -68,6 +98,7 @@ function selectUnit(event: Event) {
   const unit = protoData.value?.find((unit) => unit["unit@name"] === selectedUnitName)
   if (unit) {
     selectedUnit.value = { ...unit }
+    console.log("Selected Unit:", selectedUnit.value)
   }
 }
 </script>

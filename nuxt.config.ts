@@ -3,7 +3,7 @@ import { defineNuxtConfig } from "nuxt/config"
 export default defineNuxtConfig({
   srcDir: "src/",
   css: ["~/assets/scss/main.scss"],
-  modules: ["@nuxt/image", "vuetify-nuxt-module"],
+  modules: ["@vueuse/nuxt", "@nuxt/image", "vuetify-nuxt-module"],
   vuetify: {
     moduleOptions: {
       includeTransformAssetsUrls: {

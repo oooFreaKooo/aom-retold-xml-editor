@@ -2,6 +2,7 @@
   <VVirtualScroll class="border" :items="hideSelected ? filteredAndUnselectedUnitTypes : filteredUnitTypes" height="300">
     <template v-slot:default="{ item }">
       <VListItem
+        density="compact"
         :key="item as PropertyKey"
         @click="selectedUnitTypes?.includes(item) ? $emit('remove-type', item) : $emit('add-type', item)"
         :append-icon="selectedUnitTypes?.includes(item) && !hideSelected ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'">

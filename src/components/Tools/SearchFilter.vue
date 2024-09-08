@@ -1,7 +1,8 @@
 <template>
-  <VTextField v-model="localSearchQuery" :label="searchLabel" hide-details variant="outlined" />
+  <VTextField density="compact" v-model="localSearchQuery" :label="searchLabel" hide-details variant="outlined" />
   <VList>
     <VBtn
+      density="compact"
       :variant="activeCategory === category ? 'flat' : 'outlined'"
       v-for="category in Object.keys(categorizedUnitTypes)"
       :rounded="false"
