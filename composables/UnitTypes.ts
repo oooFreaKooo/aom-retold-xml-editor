@@ -1,4 +1,12 @@
-export const categorizedUnitTypes = ref({
+export type UnitCategory = "Logical" | "Abstract" | "Other" | "All"
+
+// Exported categorizedUnitTypes with explicit types
+export const categorizedUnitTypes = ref<{
+  Logical: string[]
+  Abstract: string[]
+  Other: string[]
+  All: string[]
+}>({
   Logical: [
     "LogicalTypeValidTraitorTarget",
     "LogicalTypeVillagersAttackResponse",

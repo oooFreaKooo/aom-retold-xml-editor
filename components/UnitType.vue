@@ -10,33 +10,58 @@
               :active-category="activeCategory"
               :categorized-unit-types="categorizedUnitTypes"
               @select-category="selectCategory" />
-            <ListsScrollable :filtered-unit-types="filteredUnitTypes" @add-type="addType" />
+            <ListsScrollable
+              :filtered-unit-types="filteredUnitTypes"
+              :selected-unit-types="selectedUnitTypes"
+              :hide-selected="hideSelected"
+              @add-type="addType" />
           </VCol>
           <VCol cols="12" md="6">
             <ItemsChips :selected-unit-types="selectedUnitTypes" @remove-type="removeType" />
           </VCol>
         </VRow>
-        <v-btn class="mt-4" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose">Save</v-btn>
+        <v-btn class="mt-2 me-2" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose"> Save </v-btn>
+        <v-btn class="mt-2 me-2" size="x-small" @click="toggleHideSelected" :rounded="false" :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
 
 <script lang="ts" setup>
-type Category = "All" | "Logical" | "Abstract" | "Other"
+import { ref, watch, nextTick } from "vue"
 
-const fillAllCategory = () => {
-  categorizedUnitTypes.value.All = Object.entries(categorizedUnitTypes.value)
-    .filter(([key]) => key !== "All")
-    .flatMap(([_, types]) => types)
-}
-fillAllCategory()
+// Props
+const props = defineProps<{ unitTypes: { unittype: string }[] }>()
 
 // Refs
 const selectedUnitTypes = ref<string[]>([])
 const searchQuery = ref<string>("")
 const activeCategory = ref<Category>("Logical")
 const filteredUnitTypes = ref<string[]>([])
+const hideSelected = ref(false)
+
+const toggleHideSelected = () => {
+  hideSelected.value = !hideSelected.value
+}
+type Category = "All" | "Logical" | "Abstract" | "Other"
+
+// Watch for changes in the selected unit's unit types (props.unitTypes)
+watch(
+  () => props.unitTypes,
+  (newUnitTypes) => {
+    selectedUnitTypes.value = []
+    newUnitTypes.forEach((type) => {
+      // Here we cast `category` as `UnitCategory` to ensure it matches the expected key type
+      Object.keys(categorizedUnitTypes.value).forEach((category) => {
+        const typedCategory = category as UnitCategory
+        if (categorizedUnitTypes.value[typedCategory].includes(type.unittype) && !selectedUnitTypes.value.includes(type.unittype)) {
+          selectedUnitTypes.value.push(type.unittype)
+        }
+      })
+    })
+  },
+  { immediate: true },
+)
 
 const filterUnitTypes = () => {
   const allTypes = categorizedUnitTypes.value[activeCategory.value]
@@ -47,7 +72,6 @@ const filterUnitTypes = () => {
   }
 }
 
-// Watch the searchQuery and trigger filterUnitTypes when it changes
 watch(searchQuery, filterUnitTypes)
 
 const selectCategory = (category: Category) => {
@@ -65,7 +89,6 @@ const removeType = (type: string) => {
   selectedUnitTypes.value = selectedUnitTypes.value.filter((t) => t !== type)
 }
 
-// Saving types logic
 const isClient = !import.meta.env.SSR
 
 const panelOpen = ref([true])

@@ -1,13 +1,20 @@
 <template>
-  <v-card>
+  <v-card style="z-index: 2">
     <v-row>
-      <v-navigation-drawer permanent expand-on-hover rail>
+      <v-app-bar color="primary" prominent>
+        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title>Unit XML Editor</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+      </v-app-bar>
+
+      <v-navigation-drawer v-model="drawer" :temporary="$vuetify.display.smAndDown" :rail="!$vuetify.display.smAndDown" expand-on-hover>
         <v-list>
           <v-list-item
             @click="toggleTheme"
-            :prepend-icon="theme.global.name.value === 'light' ? 'mdi-moon-waxing-crescent' : 'mdi-white-balance-sunny'"
-            :title="capitalize(theme.global.name.value)"
-            subtitle="Color Theme">
+            :prepend-icon="theme.global.name.value === 'light' ? 'mdi-white-balance-sunny' : 'mdi-moon-waxing-crescent'"
+            :title="capitalize(theme.global.name.value) + ' Theme'"
+            subtitle="Click to switch">
           </v-list-item>
         </v-list>
 
@@ -27,6 +34,7 @@
 import { useTheme } from "vuetify"
 
 const theme = useTheme()
+const drawer = ref(false)
 
 function toggleTheme() {
   theme.global.name.value = theme.global.name.value === "light" ? "dark" : "light"

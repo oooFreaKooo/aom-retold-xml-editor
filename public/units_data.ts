@@ -814,3 +814,141 @@ export interface Unit {
   containedhitpointbonus: number
   containedspeedbonus: number
 }
+
+export interface UnitDone {
+  animfile: string
+  obstructionradiusx: number
+  obstructionradiusz: number
+  lifespan: number
+  decay: {
+    delay: number
+    duration: number
+  }
+  los: number
+  spawn: {
+    type: string
+    count: number
+  }
+  projectilespinperiod: number
+  soundsetfile: string
+  unitaitype: string
+  tactics: string
+  protoaction: {
+    name: string
+    modifytype: string
+    modifyamount: number
+    modifyratecap: number
+    modifybase: number
+    modifydecay: number
+  }
+  selfdestructprotoaction: string
+  rollovertextid: string
+  shortrollovertextid: string
+  icon: string
+  impacttype: string
+  initialhitpoints: number
+  maxhitpoints: number
+  trainpoints: number
+  buildlimit: number
+  weightclass: number
+  populationcount: number
+  carrycapacity: {
+    resourcetype: ResourceType
+  }
+  hotkeycontext: string
+  train: {
+    row: number
+    column: number
+  }
+  command: {
+    row: number
+    column: number
+  }
+  selectionradiusx: number
+  selectionradiusz: number
+  autoattackrange: number
+  formationorder: number
+  maxcontained: number
+  contain: string
+  notcontain: string
+  sharedselectionunittypes: {
+    unittype: SharedSelectionUnitTypes
+  }
+  rechargetime: number
+  buildpoints: number
+  culture: string
+  maxrunvelocity: number
+  veterancyranks: {}
+  veterancybonus: {}
+  minimapicon: string
+  sizeclass: number
+  unitregen: number
+  heighthitpointbaroffset: number
+  initialresource: {
+    resourcetype: ResourceType
+  }
+  resourcesubtype: string
+  resourcedecay: number
+  initialunitaistance: string
+  aistancebasedistance: number
+  wanderdistance: number
+  sharedbuildlimitunit: string
+  sharedbuildlimitunittypes: {
+    unittype: string
+  }
+  transformcommand: string
+  tech: TechType[]
+  buildreplacement: string
+  creationfadetime: {
+    initalpha: number
+  }
+  birthprotoaction: string
+  auxrechargetime: number
+  displayedrange: number
+  killreward: {
+    resourcetype: string
+  }
+  dependentunit: string
+  directionalarmor: {
+    angle: number
+    value: number
+  }
+  dynamicbuildlimitunittypes: {}
+  screenshakeondestruction: number
+  placementfile: string
+  partisantype: string
+  partisancount: number
+  buildingworkrate: number
+  populationcapaddition: number
+  socketunittype: string
+  nonsocketplaceprotoid: string
+  allyhotkeycontext: string
+  allowedheightvariance: number
+  researchrate: number
+  trainingrate: number
+  ondiscoverlos: number
+  farmingradiusx: number
+  farmingradiusz: number
+  farmingobstructionradiusx: number
+  farmingobstructionradiusz: number
+  farmingnumstops: number
+  gathererlimit: number
+  minimapcolor: {
+    red: number
+    blue: number
+    green: number
+  }
+  autobuildrate: number
+  resourcepriority: number
+  workersoftlimit: number
+  replacement: {
+    type: string
+  }
+  gatherratemultiplier: number
+  heightbob: {
+    period: number
+    magnitude: number
+  }
+  containedhitpointbonus: number
+  containedspeedbonus: number
+}
