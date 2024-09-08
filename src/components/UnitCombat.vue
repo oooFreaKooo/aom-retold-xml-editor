@@ -5,7 +5,7 @@
         <v-expansion-panel-title>Combat/Stats</v-expansion-panel-title>
         <v-expansion-panel-text>
           <div v-for="(label, index) in formLabels" :key="index">
-            <FormTextField class="my-3" :label="label" v-model="formValues[label]" />
+            <TextField class="my-3" :label="label" v-model="formValues[label]" />
           </div>
           <v-btn prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose">Save</v-btn>
         </v-expansion-panel-text>

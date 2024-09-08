@@ -42,9 +42,9 @@ function toggleTheme() {
 
 const navItems = [
   { name: "Home", link: "/", icon: "mdi-home" },
-  { name: "About", link: "/about", icon: "mdi-head-question" },
-  { name: "Tools", link: "/tools", icon: "mdi-tools" },
-  { name: "Contact", link: "/contact", icon: "mdi-email" },
+  { name: "About", link: "#", icon: "mdi-head-question" },
+  { name: "Tools", link: "#", icon: "mdi-tools" },
+  { name: "Contact", link: "#", icon: "mdi-email" },
 ]
 function capitalize(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1)

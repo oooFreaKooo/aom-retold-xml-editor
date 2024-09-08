@@ -5,12 +5,12 @@
       <v-expansion-panel-text>
         <VRow>
           <VCol cols="12" md="6">
-            <ToolsSearchFilter
+            <SearchFilter
               v-model:searchQuery="searchQuery"
               :active-category="activeCategory"
               :categorized-unit-types="categorizedUnitTypes"
               @select-category="selectCategory" />
-            <ListsScrollable
+            <Scrollable
               :filtered-unit-types="filteredUnitTypes"
               :selected-unit-types="selectedUnitTypes"
               :hide-selected="hideSelected"
@@ -18,14 +18,14 @@
               @remove-type="removeType" />
           </VCol>
           <VCol cols="12" md="6">
-            <ItemsChips :selected-unit-types="selectedUnitTypes" @remove-type="removeType" />
+            <Chips :selected-unit-types="selectedUnitTypes" @remove-type="removeType" />
           </VCol>
         </VRow>
         <v-btn class="mt-2 me-2" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose"> Save </v-btn>
         <v-btn
           class="mt-2 me-2"
           color="secondary"
-          size="x-small"
+          density="comfortable"
           @click="toggleHideSelected"
           :rounded="false"
           :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />

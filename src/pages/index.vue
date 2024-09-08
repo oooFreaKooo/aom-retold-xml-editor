@@ -34,7 +34,7 @@
 
           <!-- Recursively render the nested object or array -->
           <div v-if="Array.isArray(value) || typeof value === 'object'">
-            <ToolsRecursiveRenderer :data="value" />
+            <RecursiveRenderer :data="value" />
           </div>
 
           <!-- Render non-nested values as input -->

@@ -5,15 +5,15 @@
       <v-expansion-panel-text>
         <VRow>
           <VCol cols="12" md="6">
-            <ToolsSearchFilter
+            <SearchFilter
               v-model:searchQuery="searchQuery"
               :active-category="activeCategory"
               :categorized-unit-types="categorizedFlagTypes"
               @select-category="selectCategory" />
-            <ListsScrollable :filtered-unit-types="filteredFlagTypes" @add-type="addType" />
+            <Scrollable :filtered-unit-types="filteredFlagTypes" @add-type="addType" />
           </VCol>
           <VCol cols="12" md="6">
-            <ItemsChips :selected-unit-types="selectedFlagTypes" @remove-type="removeType" />
+            <Chips :selected-unit-types="selectedFlagTypes" @remove-type="removeType" />
           </VCol>
         </VRow>
         <v-btn class="mt-4" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose">Save</v-btn>

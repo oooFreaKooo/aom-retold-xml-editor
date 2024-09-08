@@ -7,9 +7,9 @@
           <!-- Dropdown for Movement Type -->
           <v-select class="my-3" label="Movement Type" v-model="movementValues.movementType" :items="movementTypes" outlined />
           <!-- Other Movement Fields -->
-          <FormTextField class="my-3" label="Max Velocity" v-model="movementValues.maxVelocity" />
-          <FormTextField class="my-3" label="Turn Rate" v-model="movementValues.turnRate" />
-          <FormTextField class="my-3" label="Max Run Velocity" v-model="movementValues.maxRunVelocity" />
+          <TextField class="my-3" label="Max Velocity" v-model="movementValues.maxVelocity" />
+          <TextField class="my-3" label="Turn Rate" v-model="movementValues.turnRate" />
+          <TextField class="my-3" label="Max Run Velocity" v-model="movementValues.maxRunVelocity" />
           <v-btn prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveMovementAndClose">Save</v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>

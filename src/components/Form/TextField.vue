@@ -1,6 +1,6 @@
 <template>
   <VForm>
-    <v-text-field v-model="inputValue" :label="label" hide-details></v-text-field>
+    <v-text-field v-model="inputValue" :label="label" hide-details />
   </VForm>
 </template>
 

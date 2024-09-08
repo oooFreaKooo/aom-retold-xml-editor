@@ -1,12 +1,8 @@
 import { defineNuxtConfig } from "nuxt/config"
 
 export default defineNuxtConfig({
+  srcDir: "src/",
   css: ["~/assets/scss/main.scss"],
-
-  typescript: {
-    typeCheck: true,
-  },
-
   modules: ["@nuxt/image", "vuetify-nuxt-module"],
   vuetify: {
     moduleOptions: {
@@ -40,5 +36,14 @@ export default defineNuxtConfig({
     head: {
       meta: [{ charset: "utf-8" }],
     },
+  },
+  components: {
+    dirs: [
+      {
+        path: "~/components",
+        global: true,
+        pathPrefix: false,
+      },
+    ],
   },
 })
