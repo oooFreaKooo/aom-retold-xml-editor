@@ -1,42 +1,44 @@
 <template>
   <VRow class="mt-16">
-    <VCol cols="12" md="6">
-      <DynamicForms
-        title="Basic Information"
-        :formFields="basicInformationFields"
-        :selectedUnit="selectedUnit"
-        localStorageKey="basicInformation" />
-    </VCol>
-    <VCol cols="12" md="6">
-      <DynamicForms
-        title="Movement Information"
-        :formFields="movementInformationFields"
-        :selectedUnit="selectedUnit"
-        localStorageKey="movementInformation" />
-    </VCol>
-    <VCol cols="12" md="6">
-      <DynamicForms title="Combat/Stats" :formFields="unitCombatFields" :selectedUnit="selectedUnit" localStorageKey="combatInformation" />
-    </VCol>
-    <VCol cols="12">
-      <SelectorWithChips
-        title="Unit Types"
-        :unit-types="selectedUnit?.unit
+    <v-expansion-panels multiple ripple v-model="panelOpen">
+      <VCol cols="12" md="6">
+        <DynamicForms
+          title="Basic Information"
+          :formFields="basicInformationFields"
+          :selectedUnit="selectedUnit"
+          localStorageKey="basicInformation" />
+      </VCol>
+      <VCol cols="12" md="6">
+        <DynamicForms
+          title="Movement Information"
+          :formFields="movementInformationFields"
+          :selectedUnit="selectedUnit"
+          localStorageKey="movementInformation" />
+      </VCol>
+      <VCol cols="12" md="6">
+        <DynamicForms title="Combat/Stats" :formFields="unitCombatFields" :selectedUnit="selectedUnit" localStorageKey="combatInformation" />
+      </VCol>
+      <VCol cols="12">
+        <SelectorWithChips
+          title="Unit Types"
+          :unit-types="selectedUnit?.unit
         .filter((item: UnitItem) => item.unittype)
         .map((item: UnitItem) => item.unittype) || []"
-        :categorizedItems="categorizedUnitTypes"
-        searchLabel="Search unit types"
-        storageKey="selectedUnitTypes" />
-    </VCol>
-    <VCol cols="12">
-      <SelectorWithChips
-        title="Flag Types"
-        :unit-flags="selectedUnit?.unit
+          :categorizedItems="categorizedUnitTypes"
+          searchLabel="Search unit types"
+          storageKey="selectedUnitTypes" />
+      </VCol>
+      <VCol cols="12">
+        <SelectorWithChips
+          title="Flag Types"
+          :unit-flags="selectedUnit?.unit
         .filter((item: UnitItem) => item.flag)
         .map((item: UnitItem) => item.flag) || []"
-        :categorizedItems="categorizedFlagTypes"
-        searchLabel="Search flag types"
-        storageKey="selectedFlagTypes" />
-    </VCol>
+          :categorizedItems="categorizedFlagTypes"
+          searchLabel="Search flag types"
+          storageKey="selectedFlagTypes" />
+      </VCol>
+    </v-expansion-panels>
   </VRow>
   <div>
     <h1>Select Unit</h1>
@@ -69,7 +71,7 @@
 
 <script setup lang="ts">
 import SelectorWithChips from "~/components/Form/SelectorWithChips.vue"
-
+const panelOpen = ref([true])
 // Define Unit interface
 interface Unit {
   "unit@name": string

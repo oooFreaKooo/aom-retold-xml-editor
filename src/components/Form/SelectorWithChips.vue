@@ -1,46 +1,44 @@
 <template>
-  <v-expansion-panels ripple v-model="panelOpen">
-    <v-expansion-panel>
-      <v-expansion-panel-title>{{ title }}</v-expansion-panel-title>
-      <v-expansion-panel-text>
-        <VRow>
-          <VCol cols="12" md="6">
-            <SearchFilter
-              v-model:searchQuery="searchQuery"
-              :active-category="activeCategory"
-              :categorized-unit-types="categorizedItems"
-              :searchLabel="searchLabel"
-              @select-category="selectCategory" />
-            <Scrollable
-              :filtered-unit-types="filteredItems"
-              :selected-unit-types="selectedItems"
-              :hide-selected="hideSelected"
-              @add-type="addType"
-              @remove-type="removeType" />
-          </VCol>
-          <VCol cols="12" md="6">
-            <Chips :selected-unit-types="selectedItems" @remove-type="removeType" />
-          </VCol>
-        </VRow>
-        <v-row>
-          <v-col>
-            <v-btn class="mt-2 me-2" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose"> Save </v-btn>
-            <v-btn
-              class="mt-2 me-2"
-              color="secondary"
-              density="comfortable"
-              @click="toggleHideSelected"
-              :rounded="false"
-              :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />
-          </v-col>
-          <v-col class="d-flex justify-end">
-            <v-btn variant="text" prepend-icon="mdi-undo" color="warning" :rounded="false" @click="undo" :disabled="!canUndo">Undo</v-btn>
-            <v-btn variant="text" prepend-icon="mdi-redo" color="info" :rounded="false" @click="redo" :disabled="!canRedo">Redo</v-btn>
-          </v-col>
-        </v-row>
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-  </v-expansion-panels>
+  <v-expansion-panel>
+    <v-expansion-panel-title>{{ title }}</v-expansion-panel-title>
+    <v-expansion-panel-text>
+      <VRow>
+        <VCol cols="12" md="6">
+          <SearchFilter
+            v-model:searchQuery="searchQuery"
+            :active-category="activeCategory"
+            :categorized-unit-types="categorizedItems"
+            :searchLabel="searchLabel"
+            @select-category="selectCategory" />
+          <Scrollable
+            :filtered-unit-types="filteredItems"
+            :selected-unit-types="selectedItems"
+            :hide-selected="hideSelected"
+            @add-type="addType"
+            @remove-type="removeType" />
+        </VCol>
+        <VCol cols="12" md="6">
+          <Chips :selected-unit-types="selectedItems" @remove-type="removeType" />
+        </VCol>
+      </VRow>
+      <v-row>
+        <v-col>
+          <v-btn class="mt-2 me-2" prepend-icon="mdi-content-save" color="success" :rounded="false" @click="saveAndClose"> Save </v-btn>
+          <v-btn
+            class="mt-2 me-2"
+            color="secondary"
+            density="comfortable"
+            @click="toggleHideSelected"
+            :rounded="false"
+            :icon="hideSelected ? 'mdi-eye-off' : 'mdi-eye'" />
+        </v-col>
+        <v-col class="d-flex justify-end">
+          <v-btn variant="text" prepend-icon="mdi-undo" color="warning" :rounded="false" @click="undo" :disabled="!canUndo">Undo</v-btn>
+          <v-btn variant="text" prepend-icon="mdi-redo" color="info" :rounded="false" @click="redo" :disabled="!canRedo">Redo</v-btn>
+        </v-col>
+      </v-row>
+    </v-expansion-panel-text>
+  </v-expansion-panel>
 </template>
 
 <script lang="ts" setup>
