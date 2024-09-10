@@ -1,9 +1,11 @@
 export interface FormField {
   label: string
   type: "text" | "select"
+  key: string
   options?: string[]
-  key: string // New field to represent the actual data key
 }
+
+export const movementOptions = ref(["amphibious", "land", "water", "air"]).value
 
 export const basicInformationFields = ref<FormField[]>([
   { label: "Name", type: "text", key: "name" },
@@ -28,7 +30,7 @@ export const unitCombatFields = ref<FormField[]>([
 ])
 
 export const movementInformationFields = ref<FormField[]>([
-  { label: "Movement Type", type: "select", options: ["amphibious", "land", "water", "air"], key: "movementtype" },
+  { label: "Movement Type", type: "select", key: "movementtype", options: movementOptions },
   { label: "Max Velocity", type: "text", key: "maxvelocity" },
   { label: "Turn Rate", type: "text", key: "turnrate" },
   { label: "Max Run Velocity", type: "text", key: "maxrunvelocity" },
