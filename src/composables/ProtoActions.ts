@@ -1,90 +1,121 @@
+// Define a recursive Tag type that can be a FullTag, ContentTag, or AttributeTag
+export type Tag = FullTag | ContentTag | AttributeTag
+
+// A tag that has both attributes and content
+export interface FullTag {
+    attributes: Record<string, string[] | number[] | boolean | string | Tag>
+    content: Record<string, string[] | number[] | boolean | string | Tag>
+}
+
+// A tag that has only content
+export interface ContentTag {
+    content: Record<string, string[] | number[] | boolean | string | Tag>
+}
+
+// A tag that has only attributes
+export interface AttributeTag {
+    attributes: Record<string, string[] | number[] | boolean | string | Tag>
+}
+
+// ProtoActionField can now handle nested Tag structures
+export interface ProtoActionField {
+    label: string
+    type: Tag
+    key: string
+}
+
+export const protoActionNameAttributes = ref({
+    stringid: ["STR_ACTION_CHARGE_SPAWN", "STR_ACTION_PETRIFICATION", "STR_ACTION_PICKUP", "STR_TECH_FURY_OF_THE_FALLEN_NAME"],
+    notactics: [""],
+}).value
+
+export const protoActionNameContent = ref({
+    string: [
+        "AntiWallAttack",
+        "AoEAttack",
+        "AreaDamage",
+        "AreaHeal",
+        "Attaching",
+        "AutoBoost",
+        "AutoConvert",
+        "AutoGather",
+        "AutoGatherFavor",
+        "AutoGatherFood",
+        "AutoLOS",
+        "BeamAttack",
+        "BillowingSmog",
+        "BirthAttack",
+        "BlazingStrafeAttack",
+        "BuckAttack",
+        "Build",
+        "BuildingAttack",
+        "BurstHeal",
+        "Capsize",
+        "ChannelAttack",
+        "ChaosAttack",
+        "ChargedHandAttack",
+        "ChargedRangedAttack",
+        "ChargedSpawn",
+        "ChopAttack",
+        "Convert",
+        "DeathBoostDamageBonus",
+        "DelayedTransform",
+        "DistanceLimiting",
+        "DropOff",
+        "DwarvenPunt",
+        "DynamicLOS",
+        "Eat",
+        "FlameAttack",
+        "FlyingUnitAttack",
+        "Footy",
+        "FreezeAttack",
+        "FreezeTitan",
+        "Gather",
+        "Gore",
+        "HandAttack",
+        "Heal",
+        "Hunting",
+        "IdleDamageBonus",
+        "IncreaseDamageWithLikeUnits",
+        "IncreaseSpeedWithLikeUnits",
+        "JumpAttack",
+        "LightningAttack",
+        "LonghouseSpeedBonus",
+        "MythSelfDestructDivineAttack",
+        "MythSelfDestructMundaneAttack",
+        "MythSelfDestructMythicalAttack",
+        "MythSelfDestructRareAttack",
+        "Pacify",
+        "PetrificationBonus",
+        "Pickup",
+        "ProgressiveDamageHigh",
+        "ProgressiveDamageLight",
+        "Punt",
+        "RangedAttack",
+        "RangedAttackFlying",
+        "RangedAttackMyth",
+        "ReincarnationAttack",
+        "Repair",
+        "SelfDestructAttack",
+        "ShockwaveAttack",
+        "SpeedBonusDivine",
+        "SpeedBonusMundane",
+        "SpeedBonusMythical",
+        "SpeedBonusRare",
+        "TauntAttack",
+        "Throw",
+        "TitanAttack",
+        "Trade",
+        "TransfigurationAttack",
+    ],
+}).value
+
 export const protoActionsTags = ref({
     name: {
-        attributes: {
-            stringid: ["STR_ACTION_CHARGE_SPAWN", "STR_ACTION_PETRIFICATION", "STR_ACTION_PICKUP", "STR_TECH_FURY_OF_THE_FALLEN_NAME"],
-            notactics: [""],
-        },
-        content: {
-            string: [
-                "AntiWallAttack",
-                "AoEAttack",
-                "AreaDamage",
-                "AreaHeal",
-                "Attaching",
-                "AutoBoost",
-                "AutoConvert",
-                "AutoGather",
-                "AutoGatherFavor",
-                "AutoGatherFood",
-                "AutoLOS",
-                "BeamAttack",
-                "BillowingSmog",
-                "BirthAttack",
-                "BlazingStrafeAttack",
-                "BuckAttack",
-                "Build",
-                "BuildingAttack",
-                "BurstHeal",
-                "Capsize",
-                "ChannelAttack",
-                "ChaosAttack",
-                "ChargedHandAttack",
-                "ChargedRangedAttack",
-                "ChargedSpawn",
-                "ChopAttack",
-                "Convert",
-                "DeathBoostDamageBonus",
-                "DelayedTransform",
-                "DistanceLimiting",
-                "DropOff",
-                "DwarvenPunt",
-                "DynamicLOS",
-                "Eat",
-                "FlameAttack",
-                "FlyingUnitAttack",
-                "Footy",
-                "FreezeAttack",
-                "FreezeTitan",
-                "Gather",
-                "Gore",
-                "HandAttack",
-                "Heal",
-                "Hunting",
-                "IdleDamageBonus",
-                "IncreaseDamageWithLikeUnits",
-                "IncreaseSpeedWithLikeUnits",
-                "JumpAttack",
-                "LightningAttack",
-                "LonghouseSpeedBonus",
-                "MythSelfDestructDivineAttack",
-                "MythSelfDestructMundaneAttack",
-                "MythSelfDestructMythicalAttack",
-                "MythSelfDestructRareAttack",
-                "Pacify",
-                "PetrificationBonus",
-                "Pickup",
-                "ProgressiveDamageHigh",
-                "ProgressiveDamageLight",
-                "Punt",
-                "RangedAttack",
-                "RangedAttackFlying",
-                "RangedAttackMyth",
-                "ReincarnationAttack",
-                "Repair",
-                "SelfDestructAttack",
-                "ShockwaveAttack",
-                "SpeedBonusDivine",
-                "SpeedBonusMundane",
-                "SpeedBonusMythical",
-                "SpeedBonusRare",
-                "TauntAttack",
-                "Throw",
-                "TitanAttack",
-                "Trade",
-                "TransfigurationAttack",
-            ],
-        },
-    },
+        attributes: protoActionNameAttributes,
+        content: protoActionNameContent,
+    } as FullTag,
+
     damagebonus: {
         attributes: {
             type: [
@@ -120,25 +151,26 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    },
+    } as FullTag,
+
     modifyamount: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifydamagetype: {
-        attributes: {},
         content: {
             string: ["Divine", "Hack", "Pierce"],
         },
-    },
+    } as ContentTag,
+
     maxrange: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     damage: {
         attributes: {
             type: ["Crush", "Divine", "Hack", "Pierce"],
@@ -146,7 +178,8 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    },
+    } as FullTag,
+
     rate: {
         attributes: {
             type: [
@@ -211,9 +244,9 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    },
+    } as FullTag,
+
     type: {
-        attributes: {},
         content: {
             string: [
                 "Attack",
@@ -229,39 +262,33 @@ export const protoActionsTags = ref({
                 "Spawn",
             ],
         },
-    },
+    } as ContentTag,
+
     attackaction: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     basedamagecap: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
-    damagearea: {
-        attributes: {},
-        content: {
-            number: true,
-        },
-    },
+    } as ContentTag,
+
     damageflags: {
-        attributes: {},
         content: {
             string: ["Enemy", "Nature|Enemy", "Nature|Self|Enemy|Ally"],
         },
-    },
-    areasortmode: {
-        attributes: {},
+    } as ContentTag,
+
+    damagearea: {
         content: {
-            string: ["Directional", "Radial"],
+            number: true,
         },
-    },
+    } as ContentTag,
+
     impacteffect: {
-        attributes: {},
         content: {
             string: [
                 "effects\\impacts\\crush",
@@ -274,21 +301,21 @@ export const protoActionsTags = ref({
                 "effects\\impacts\\titan",
             ],
         },
-    },
+    } as ContentTag,
+
     sendunderattackevent: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     rof: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     projectile: {
-        attributes: {},
         content: {
             string: [
                 "ProjectileAcidBlobInvisible",
@@ -328,19 +355,20 @@ export const protoActionsTags = ref({
                 "ProjectileWadjetSpit",
             ],
         },
-    },
+    } as ContentTag,
+
     dropsitegathering: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     defaultattack: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     minrate: {
         attributes: {
             type: [
@@ -376,21 +404,21 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    },
+    } as FullTag,
+
     minrange: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     numberprojectiles: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     scalebycontainedunittype: {
-        attributes: {},
         content: {
             rate: {
                 attributes: {
@@ -456,9 +484,10 @@ export const protoActionsTags = ref({
                 content: {
                     number: true,
                 },
-            },
+            } as FullTag,
         },
-    },
+    } as ContentTag,
+
     onhiteffect: {
         attributes: {
             type: [
@@ -548,7 +577,7 @@ export const protoActionsTags = ref({
                 content: {
                     number: true,
                 },
-            },
+            } as FullTag,
             modifyramp: {
                 attributes: {
                     type: ["Damage", "Speed"],
@@ -556,9 +585,10 @@ export const protoActionsTags = ref({
                     final: ["1.000000"],
                 },
                 content: {},
-            },
+            } as FullTag,
         },
-    },
+    } as FullTag,
+
     modify: {
         attributes: {
             type: ["ArmorSpecific", "Chaos", "Damage", "ForcedTarget", "ROF", "Speed"],
@@ -567,103 +597,104 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    },
+    } as FullTag,
+
     workonfrozenunits: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     coneareaangle: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     outerdamageareadistance: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     outerdamageareafactor: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     fulldamagemaintarget: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     maxsizeclass: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     perfectaccuracy: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     instantballistics: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     volleymode: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     throw: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     impactforcemin: {
-        attributes: {},
         content: {
             string: ["200.0f", "300.0f"],
         },
-    },
+    } as ContentTag,
+
     impactforcemax: {
-        attributes: {},
         content: {
             string: ["400.0f", "600.0f"],
         },
-    },
+    } as ContentTag,
+
     impactlaunchangle: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     trackrating: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     selfdestruct: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     slowhealmultiplier: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     conversionprotoid: {
         attributes: {
             srctype: [
@@ -721,91 +752,92 @@ export const protoActionsTags = ref({
                 "ZebraOfSet",
             ],
         },
-    },
+    } as FullTag,
+
     active: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     numberbounces: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     attachprotounit: {
-        attributes: {},
         content: {
             string: ["SunRayRevealer"],
         },
-    },
+    } as ContentTag,
+
     modifyduration: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifyprotoid: {
-        attributes: {},
         content: {
             string: ["BerserkDamageBoost", "Roc", "RocLanded"],
         },
-    },
+    } as ContentTag,
+
     attachvalidtargetonly: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     displayednumberprojectiles: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     shockstun: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     stunduration: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     persistent: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     animationrate: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     chargeaction: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     forcespawn: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     anim: {
-        attributes: {},
         content: {
             string: ["Build"],
         },
-    },
+    } as ContentTag,
+
     typedmaxrange: {
         attributes: {
             type: ["Dock"],
@@ -813,67 +845,68 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    },
+    } as FullTag,
+
     modifytype: {
-        attributes: {},
         content: {
             string: ["ArmorSpecific", "Damage", "LOS", "Speed"],
         },
-    },
+    } as ContentTag,
+
     modifyratecap: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifybase: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifydecay: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifyratebytype: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     targetground: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     throwdistancemin: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     throwdistancemax: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     throwmaxheight: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     throwvelocity: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifyramp: {
         attributes: {
             type: ["Damage", "Speed"],
@@ -881,125 +914,125 @@ export const protoActionsTags = ref({
             final: ["1.000000"],
         },
         content: {},
-    },
+    } as FullTag,
+
     modelattachment: {
-        attributes: {},
         content: {
             string: ["vfx\\glow\\arkantos_boost.xml", "vfx\\glow\\einheri_boost.xml"],
         },
-    },
+    } as ContentTag,
+
     modelattachmentbone: {
-        attributes: {},
         content: {
             string: ["bonethatdoesntexist"],
         },
-    },
+    } as ContentTag,
+
     passthroughbuildings: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     maxheight: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     maxspread: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     spreadfactor: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     forceareaattackcenter: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifymultiplier: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     modifytargetlimit: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     directionaldamagerefangle: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     allydamagemultiplier: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     donotignoredead: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     exclusive: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     passthrough: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     launchpoint: {
-        attributes: {},
         content: {
             string: ["ChargeAttackLaunchPoint"],
         },
-    },
+    } as ContentTag,
+
     activeifcontainsunits: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     containscalebasedamage: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     includenature: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     cannotbeconvertedbyallies: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
+    } as ContentTag,
+
     homingballistics: {
-        attributes: {},
         content: {
             number: true,
         },
-    },
-})
+    } as ContentTag,
+}).value
