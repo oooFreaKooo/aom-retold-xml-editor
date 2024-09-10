@@ -1,21 +1,24 @@
-// Define a recursive Tag type that can be a FullTag, ContentTag, or AttributeTag
-export type Tag = FullTag | ContentTag | AttributeTag
+// Allow individual strings and numbers, in addition to arrays and nested tags
+export type TagContentValue = string | number | boolean | string[] | number[] | Tag
 
 // A tag that has both attributes and content
 export interface FullTag {
-    attributes: Record<string, string[] | number[] | boolean | string | Tag>
-    content: Record<string, string[] | number[] | boolean | string | Tag>
+    attributes: Record<string, TagContentValue>
+    content: Record<string, TagContentValue>
 }
 
 // A tag that has only content
 export interface ContentTag {
-    content: Record<string, string[] | number[] | boolean | string | Tag>
+    content: Record<string, TagContentValue>
 }
 
 // A tag that has only attributes
 export interface AttributeTag {
-    attributes: Record<string, string[] | number[] | boolean | string | Tag>
+    attributes: Record<string, TagContentValue>
 }
+
+// Recursive Tag type
+export type Tag = FullTag | ContentTag | AttributeTag
 
 // ProtoActionField can now handle nested Tag structures
 export interface ProtoActionField {
@@ -514,31 +517,9 @@ export const protoActionsTags = ref({
                 "TreeFlatten",
             ],
             freezetype: ["StoneDamage", "default"],
-            duration: [
-                "1.000000",
-                "1.50",
-                "10.0",
-                "10.000000",
-                "11.0",
-                "15.000000",
-                "17.0",
-                "2",
-                "20.000000",
-                "3.00",
-                "30.000000",
-                "4.00",
-                "5",
-                "5.0",
-                "5.000000",
-                "6.00",
-                "6.000000",
-                "7.000000",
-                "8.0",
-                "8.000000",
-                "8.2",
-            ],
-            damage: ["300.000000", "400.000000"],
-            rate: ["0.15", "0.20", "0.40", "0.5", "0.60", "0.65", "1.500000", "4.00000", "4.000000", "40.000000", "8.000000"],
+            duration: 0,
+            damage: 0,
+            rate: 0,
             targetunittype: [
                 "Building",
                 "EconomicUnit",
@@ -559,14 +540,14 @@ export const protoActionsTags = ref({
             dmgtype: ["Crush", "Divine", "Pierce"],
             proto: ["Chicken", "MinionReincarnated", "VFXBleed", "VFXCaladriaPacify", "VFXChaos", "VFXCold", "VFXFenirTreeFire", "VFXPoison"],
             attachbone: ["spine", "vfx_top"],
-            radius: ["10.00000", "10.000000", "12.000000"],
+            radius: 0,
             shadingtype: ["burning", "frost"],
-            fadetime: ["1.0"],
-            factor: ["1.1", "1.4"],
-            active: ["0"],
-            freezeduration: ["20.0"],
+            fadetime: 0,
+            factor: 0,
+            active: 0,
+            freezeduration: 0,
             anim: ["Burning"],
-            deadonly: ["1"],
+            deadonly: 0,
         },
         content: {
             modify: {
@@ -575,14 +556,14 @@ export const protoActionsTags = ref({
                     dmgtype: ["Crush", "Hack", "Pierce"],
                 },
                 content: {
-                    number: true,
+                    number: 0,
                 },
             } as FullTag,
             modifyramp: {
                 attributes: {
                     type: ["Damage", "Speed"],
-                    init: ["1.500000"],
-                    final: ["1.000000"],
+                    init: 0,
+                    final: 0,
                 },
                 content: {},
             } as FullTag,
