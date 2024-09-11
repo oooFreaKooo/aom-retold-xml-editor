@@ -1,13 +1,22 @@
-import { defineNuxtConfig } from "nuxt/config"
+import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-    srcDir: "src/",
-    css: ["~/assets/scss/main.scss"],
-    modules: ["@vueuse/nuxt", "@nuxt/image", "vuetify-nuxt-module"],
+    srcDir: 'src/',
+    css: ['~/assets/scss/main.scss'],
+    modules: [
+        '@vueuse/nuxt',
+        '@nuxt/image',
+        'vuetify-nuxt-module',
+        '@nuxt/eslint',
+    ],
     vuetify: {
         moduleOptions: {
             includeTransformAssetsUrls: {
-                "v-card": ["image", "prepend-avatar", "append-avatar"],
+                'v-card': [
+                    'image',
+                    'prepend-avatar',
+                    'append-avatar',
+                ],
             },
             ssrClientHints: {
                 reloadOnFirstRequest: false,
@@ -23,7 +32,7 @@ export default defineNuxtConfig({
     vite: {
         clearScreen: false,
         build: {
-            target: "esnext",
+            target: 'esnext',
         },
         vue: {
             script: {
@@ -32,15 +41,15 @@ export default defineNuxtConfig({
         },
     },
     app: {
-        baseURL: "/",
+        baseURL: '/',
         head: {
-            meta: [{ charset: "utf-8" }],
+            meta: [{ charset: 'utf-8' }],
         },
     },
     components: {
         dirs: [
             {
-                path: "~/components",
+                path: '~/components',
                 global: true,
                 pathPrefix: false,
             },
