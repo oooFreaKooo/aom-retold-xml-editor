@@ -205,7 +205,7 @@ export const protoActionsTags = ref({
                 'Throw',
                 'TreeFlatten',
             ],
-            freezetype: ['StoneDamage', 'default'],
+            freezetype: [ 'StoneDamage', 'default' ],
             duration: '0',
             damage: '0',
             rate: '0',
@@ -227,9 +227,7 @@ export const protoActionsTags = ref({
                 'WildCrops',
             ],
             dmgtype: [
-                'Crush',
-                'Divine',
-                'Pierce',
+                'Crush', 'Divine', 'Pierce',
             ],
             proto: [
                 'Chicken',
@@ -241,9 +239,9 @@ export const protoActionsTags = ref({
                 'VFXFenirTreeFire',
                 'VFXPoison',
             ],
-            attachbone: ['spine', 'vfx_top'],
+            attachbone: [ 'spine', 'vfx_top' ],
             radius: '0',
-            shadingtype: ['burning', 'frost'],
+            shadingtype: [ 'burning', 'frost' ],
             fadetime: '0',
             factor: '0',
             active: '0',
@@ -263,9 +261,7 @@ export const protoActionsTags = ref({
                         'Speed',
                     ],
                     dmgtype: [
-                        'Crush',
-                        'Hack',
-                        'Pierce',
+                        'Crush', 'Hack', 'Pierce',
                     ],
                 },
                 content: {
@@ -274,7 +270,7 @@ export const protoActionsTags = ref({
             } as FullTag,
             modifyramp: {
                 attributes: {
-                    type: ['Damage', 'Speed'],
+                    type: [ 'Damage', 'Speed' ],
                     init: '0',
                     final: '0',
                 },
@@ -294,9 +290,7 @@ export const protoActionsTags = ref({
                 'Speed',
             ],
             dmgtype: [
-                'Crush',
-                'Hack',
-                'Pierce',
+                'Crush', 'Hack', 'Pierce',
             ],
         },
         content: {
@@ -432,9 +426,7 @@ export const protoActionsTags = ref({
     modifyprotoid: {
         content: {
             string: [
-                'BerserkDamageBoost',
-                'Roc',
-                'RocLanded',
+                'BerserkDamageBoost', 'Roc', 'RocLanded',
             ],
         },
     } as ContentTag,
@@ -505,10 +497,7 @@ export const protoActionsTags = ref({
     modifytype: {
         content: {
             string: [
-                'ArmorSpecific',
-                'Damage',
-                'LOS',
-                'Speed',
+                'ArmorSpecific', 'Damage', 'LOS', 'Speed',
             ],
         },
     } as ContentTag,
@@ -569,7 +558,7 @@ export const protoActionsTags = ref({
 
     modifyramp: {
         attributes: {
-            type: ['Damage', 'Speed'],
+            type: [ 'Damage', 'Speed' ],
             init: '0',
             final: '0',
         },
@@ -578,7 +567,7 @@ export const protoActionsTags = ref({
 
     modelattachment: {
         content: {
-            string: ['vfx\\glow\\arkantos_boost.xml', 'vfx\\glow\\einheri_boost.xml'],
+            string: [ 'vfx\\glow\\arkantos_boost.xml', 'vfx\\glow\\einheri_boost.xml' ],
         },
     } as ContentTag,
 

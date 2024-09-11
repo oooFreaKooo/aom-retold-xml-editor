@@ -128,8 +128,8 @@ const removeType = (type: string) => {
 
 // Watch for changes in unitTypes and unitFlags
 watch(
-    [() => props.unitTypes, () => props.unitFlags],
-    ([newUnitTypes, newUnitFlags]) => {
+    [ () => props.unitTypes, () => props.unitFlags ],
+    ([ newUnitTypes, newUnitFlags ]) => {
         selectedItems.value = []
         const updatedItems = [...selectedItems.value]
 

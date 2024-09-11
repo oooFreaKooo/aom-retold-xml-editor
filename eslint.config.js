@@ -10,18 +10,19 @@ export default createConfigForNuxt({
 })
     .override('nuxt/typescript/rules', {
         rules: {
-            'curly': ['error', 'all'],
+            'curly': [ 'error', 'all' ],
             'dot-notation': 'error',
-            'no-console': ['warn', { allow: ['warn', 'error', 'debug'] }],
+            'no-console': [ 'warn', { allow: [ 'warn', 'error', 'debug' ] } ],
             'no-lonely-if': 'error',
             'no-useless-rename': 'error',
             'object-shorthand': 'error',
-            'prefer-const': ['error', { destructuring: 'any', ignoreReadBeforeAssign: false }],
+            'prefer-const': [ 'error', { destructuring: 'any', ignoreReadBeforeAssign: false } ],
             'require-await': 'error',
-            'semi': ['error', 'never'],
-            'indent': ['error', 4],
-            'array-bracket-newline': ['error', { multiline: true, minItems: 3 }],
-            'array-element-newline': ['error', { multiline: true, minItems: 3 }],
+            'semi': [ 'error', 'never' ],
+            'array-bracket-newline': [ 'error', { multiline: true, minItems: 3 } ],
+            'array-element-newline': 'off',
+            'array-bracket-spacing': [ 'error', 'always', { singleValue: false } ],
+
             '@typescript-eslint/ban-ts-comment': [
                 'error',
                 {
@@ -48,20 +49,22 @@ export default createConfigForNuxt({
 
     .override('nuxt/vue/rules', {
         rules: {
-            'vue/html-indent': ['error', 4],
-            'vue/script-indent': ['error', 4, { baseIndent: 0 }],
+            'vue/html-indent': [ 'error', 4 ],
+            'vue/script-indent': [ 'error', 4, { baseIndent: 0 } ],
             'vue/multi-word-component-names': 'off',
         },
     })
 
     .override('nuxt/stylistic', {
         rules: {
-            '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+            '@stylistic/brace-style': [ 'error', '1tbs', { allowSingleLine: true } ],
             '@stylistic/indent-binary-ops': 'off',
             '@stylistic/max-statements-per-line': 'off',
             '@stylistic/operator-linebreak': 'off',
-            '@stylistic/quote-props': ['error', 'consistent'],
-            '@stylistic/space-before-function-paren': ['error', 'always'],
-            '@stylistic/indent': ['error', 4],
+            '@stylistic/quote-props': [ 'error', 'consistent' ],
+            '@stylistic/space-before-function-paren': [ 'error', 'always' ],
+            '@stylistic/indent': [ 'error', 4 ],
+            '@stylistic/array-bracket-spacing': [ 'error', 'always', { singleValue: false } ],
+            '@stylistic/max-len': [ 'error', { code: 200, tabWidth: 4 } ],
         },
     })

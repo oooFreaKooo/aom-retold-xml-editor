@@ -15,15 +15,10 @@ export default defineVuetifyConfiguration({
         VDatePicker3: 'VDatePicker',
     },
     directives: [
-        'ClickOutside',
-        'Resize',
-        'Ripple',
+        'ClickOutside', 'Resize', 'Ripple',
     ],
     components: [
-        'VDialog',
-        'VExpansionPanel',
-        'VExpansionPanelText',
-        'VExpansionPanelTitle',
+        'VDialog', 'VExpansionPanel', 'VExpansionPanelText', 'VExpansionPanelTitle',
     ],
     blueprint: md3,
     theme: {

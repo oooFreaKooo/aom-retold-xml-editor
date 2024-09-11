@@ -36,7 +36,7 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['update:searchQuery', 'select-category'])
+const emit = defineEmits([ 'update:searchQuery', 'select-category' ])
 
 const localSearchQuery = ref(props.searchQuery)
 
