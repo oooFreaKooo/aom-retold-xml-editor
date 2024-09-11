@@ -77,17 +77,17 @@ export const protoActionsTags = ref({
     type: {
         content: {
             string: [
-                "Attack",
-                "AutoGather",
-                "Build",
-                "DistanceModify",
-                "DropOff",
-                "Heal",
-                "IdleStatBonus",
-                "LikeBonus",
-                "Pickup",
-                "Repair",
-                "Spawn",
+                'Attack',
+                'AutoGather',
+                'Build',
+                'DistanceModify',
+                'DropOff',
+                'Heal',
+                'IdleStatBonus',
+                'LikeBonus',
+                'Pickup',
+                'Repair',
+                'Spawn',
             ],
         },
     } as ContentTag,
@@ -183,76 +183,100 @@ export const protoActionsTags = ref({
     onhiteffect: {
         attributes: {
             type: [
-                "AnimOverride",
-                "Attach",
-                "Boost",
-                "DamageOverTime",
-                "Freeze",
-                "Lifesteal",
-                "MutateNature",
-                "ProgFreeze",
-                "ProgFreezeROF",
-                "ProgFreezeSpeed",
-                "ProgShading",
-                "Pull",
-                "Reincarnation",
-                "SelfModify",
-                "Shading",
-                "ShadingFade",
-                "Snare",
-                "StatModify",
-                "Stun",
-                "Throw",
-                "TreeFlatten",
+                'AnimOverride',
+                'Attach',
+                'Boost',
+                'DamageOverTime',
+                'Freeze',
+                'Lifesteal',
+                'MutateNature',
+                'ProgFreeze',
+                'ProgFreezeROF',
+                'ProgFreezeSpeed',
+                'ProgShading',
+                'Pull',
+                'Reincarnation',
+                'SelfModify',
+                'Shading',
+                'ShadingFade',
+                'Snare',
+                'StatModify',
+                'Stun',
+                'Throw',
+                'TreeFlatten',
             ],
-            freezetype: ["StoneDamage", "default"],
-            duration: "0",
-            damage: "0",
-            rate: "0",
+            freezetype: ['StoneDamage', 'default'],
+            duration: '0',
+            damage: '0',
+            rate: '0',
             targetunittype: [
-                "Building",
-                "EconomicUnit",
-                "Herdable",
-                "Hero",
-                "HumanSoldier",
-                "Huntable",
-                "LogicalTypeHandUnitsAttack",
-                "LogicalTypeMythUnitNotTitan",
-                "LogicalTypeShipNotHero",
-                "LogicalTypeVillagerNotHero",
-                "NonConvertableHerdable",
-                "Ship",
-                "Tree",
-                "Unit",
-                "WildCrops",
+                'Building',
+                'EconomicUnit',
+                'Herdable',
+                'Hero',
+                'HumanSoldier',
+                'Huntable',
+                'LogicalTypeHandUnitsAttack',
+                'LogicalTypeMythUnitNotTitan',
+                'LogicalTypeShipNotHero',
+                'LogicalTypeVillagerNotHero',
+                'NonConvertableHerdable',
+                'Ship',
+                'Tree',
+                'Unit',
+                'WildCrops',
             ],
-            dmgtype: ["Crush", "Divine", "Pierce"],
-            proto: ["Chicken", "MinionReincarnated", "VFXBleed", "VFXCaladriaPacify", "VFXChaos", "VFXCold", "VFXFenirTreeFire", "VFXPoison"],
-            attachbone: ["spine", "vfx_top"],
-            radius: "0",
-            shadingtype: ["burning", "frost"],
-            fadetime: "0",
-            factor: "0",
-            active: "0",
-            freezeduration: "0",
-            anim: ["Burning"],
-            deadonly: "0",
+            dmgtype: [
+                'Crush',
+                'Divine',
+                'Pierce',
+            ],
+            proto: [
+                'Chicken',
+                'MinionReincarnated',
+                'VFXBleed',
+                'VFXCaladriaPacify',
+                'VFXChaos',
+                'VFXCold',
+                'VFXFenirTreeFire',
+                'VFXPoison',
+            ],
+            attachbone: ['spine', 'vfx_top'],
+            radius: '0',
+            shadingtype: ['burning', 'frost'],
+            fadetime: '0',
+            factor: '0',
+            active: '0',
+            freezeduration: '0',
+            anim: ['Burning'],
+            deadonly: '0',
         },
         content: {
             modify: {
                 attributes: {
-                    type: ["ArmorSpecific", "Chaos", "Damage", "ForcedTarget", "ROF", "Speed"],
-                    dmgtype: ["Crush", "Hack", "Pierce"],
+                    type: [
+                        'ArmorSpecific',
+                        'Chaos',
+                        'Damage',
+                        'ForcedTarget',
+                        'ROF',
+                        'Speed',
+                    ],
+                    dmgtype: [
+                        'Crush',
+                        'Hack',
+                        'Pierce',
+                    ],
                 },
                 content: {
-                    number: "0",
+                    number: '0',
                 },
             } as FullTag,
             modifyramp: {
                 attributes: {
-                    type: ["Damage", "Speed"],
-                    init: "0",
-                    final: "0",
+                    type: ['Damage', 'Speed'],
+                    init: '0',
+                    final: '0',
                 },
                 content: {},
             } as FullTag,
@@ -261,8 +285,19 @@ export const protoActionsTags = ref({
 
     modify: {
         attributes: {
-            type: ["ArmorSpecific", "Chaos", "Damage", "ForcedTarget", "ROF", "Speed"],
-            dmgtype: ["Crush", "Hack", "Pierce"],
+            type: [
+                'ArmorSpecific',
+                'Chaos',
+                'Damage',
+                'ForcedTarget',
+                'ROF',
+                'Speed',
+            ],
+            dmgtype: [
+                'Crush',
+                'Hack',
+                'Pierce',
+            ],
         },
         content: {
             number: true,
@@ -331,13 +366,13 @@ export const protoActionsTags = ref({
 
     impactforcemin: {
         content: {
-            string: "0",
+            string: '0',
         },
     } as ContentTag,
 
     impactforcemax: {
         content: {
-            string: "0",
+            string: '0',
         },
     } as ContentTag,
 
@@ -384,7 +419,7 @@ export const protoActionsTags = ref({
 
     attachprotounit: {
         content: {
-            string: ["SunRayRevealer"],
+            string: ['SunRayRevealer'],
         },
     } as ContentTag,
 
@@ -396,7 +431,11 @@ export const protoActionsTags = ref({
 
     modifyprotoid: {
         content: {
-            string: ["BerserkDamageBoost", "Roc", "RocLanded"],
+            string: [
+                'BerserkDamageBoost',
+                'Roc',
+                'RocLanded',
+            ],
         },
     } as ContentTag,
 
@@ -450,13 +489,13 @@ export const protoActionsTags = ref({
 
     anim: {
         content: {
-            string: ["Build"],
+            string: ['Build'],
         },
     } as ContentTag,
 
     typedmaxrange: {
         attributes: {
-            type: ["Dock"],
+            type: ['Dock'],
         },
         content: {
             number: true,
@@ -465,7 +504,12 @@ export const protoActionsTags = ref({
 
     modifytype: {
         content: {
-            string: ["ArmorSpecific", "Damage", "LOS", "Speed"],
+            string: [
+                'ArmorSpecific',
+                'Damage',
+                'LOS',
+                'Speed',
+            ],
         },
     } as ContentTag,
 
@@ -525,22 +569,22 @@ export const protoActionsTags = ref({
 
     modifyramp: {
         attributes: {
-            type: ["Damage", "Speed"],
-            init: "0",
-            final: "0",
+            type: ['Damage', 'Speed'],
+            init: '0',
+            final: '0',
         },
         content: {},
     } as FullTag,
 
     modelattachment: {
         content: {
-            string: ["vfx\\glow\\arkantos_boost.xml", "vfx\\glow\\einheri_boost.xml"],
+            string: ['vfx\\glow\\arkantos_boost.xml', 'vfx\\glow\\einheri_boost.xml'],
         },
     } as ContentTag,
 
     modelattachmentbone: {
         content: {
-            string: ["bonethatdoesntexist"],
+            string: ['bonethatdoesntexist'],
         },
     } as ContentTag,
 
@@ -618,7 +662,7 @@ export const protoActionsTags = ref({
 
     launchpoint: {
         content: {
-            string: ["ChargeAttackLaunchPoint"],
+            string: ['ChargeAttackLaunchPoint'],
         },
     } as ContentTag,
 

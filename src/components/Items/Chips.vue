@@ -1,17 +1,22 @@
 <template>
     <VChipGroup column>
         <VChip
-            density="compact"
             v-for="(type, index) in selectedUnitTypes"
-            closable
             :key="index"
-            @click="$emit('remove-type', type)"
-            class="mr-2 mb-2">
+            density="compact"
+            closable
+            class="mr-2 mb-2"
+            @click="emit('remove-type', type)"
+        >
             {{ type }}
         </VChip>
     </VChipGroup>
 </template>
 
 <script lang="ts" setup>
-    const props = defineProps<{ selectedUnitTypes: string[] }>()
+defineProps<{ selectedUnitTypes: string[] }>()
+
+const emit = defineEmits<{
+    (e: 'remove-type', type: string): void
+}>()
 </script>
