@@ -12,7 +12,6 @@ export default createConfigForNuxt({
         rules: {
             'curly': [ 'error', 'all' ],
             'dot-notation': 'error',
-            'no-console': [ 'warn', { allow: [ 'warn', 'error', 'debug' ] } ],
             'no-lonely-if': 'error',
             'no-useless-rename': 'error',
             'object-shorthand': 'error',

@@ -38,6 +38,14 @@
                     local-storage-key="combatInformation"
                 />
             </VCol>
+            <VCol
+                cols="12"
+            >
+                <ProtoActionForms
+                    title="Protoaction Editor"
+                    :proto-action-form-fields="protoActionsFields"
+                />
+            </VCol>
             <VCol cols="12">
                 <SelectorWithChips
                     title="Unit Types"
@@ -104,6 +112,7 @@
 </template>
 
 <script setup lang="ts">
+import ProtoActionForms from '~/components/Form/ProtoActionForms.vue'
 import SelectorWithChips from '~/components/Form/SelectorWithChips.vue'
 
 const panelOpen = ref([true])
