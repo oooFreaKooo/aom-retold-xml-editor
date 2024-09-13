@@ -1,31 +1,63 @@
 <template>
-    <div>
-        <div
-            v-for="(value, key) in data"
-            :key="key"
+    <v-row
+        v-for="(value, key) in dataCopy"
+        :key="key"
+        class="mb-3"
+    >
+        <v-col
+            v-if="typeof value === 'object' && value !== null"
+            cols="12"
         >
-            <!-- If the value is an object or array, render it recursively -->
-            <div v-if="typeof value === 'object' && value !== null">
-                <h4>{{ key }}</h4>
-                <RecursiveRenderer :data="value" />
-            </div>
-
-            <!-- Render basic values -->
-            <div v-else>
-                <label>{{ key }}: </label>
-                <input
-                    :value="value"
-                    disabled
+            <template v-if="Array.isArray(value)">
+                <h4>{{ label }}</h4>
+                <v-row
+                    v-for="(item, index) in value"
+                    :key="index"
                 >
-            </div>
-        </div>
-    </div>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="dataCopy[key][index]"
+                            variant="outlined"
+                            :label="`${label} ${index + 1}`"
+                        />
+                    </v-col>
+                </v-row>
+            </template>
+
+            <template v-else>
+                <h4>{{ label }}</h4>
+                <RecursiveRenderer
+                    :data="value"
+                    :label="String(key)"
+                />
+            </template>
+        </v-col>
+
+        <v-col
+            v-else
+            cols="12"
+        >
+            <v-text-field
+                v-model="dataCopy[key]"
+                variant="outlined"
+                :label="label"
+            />
+        </v-col>
+    </v-row>
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue'
+
 interface RecursiveData {
     [key: string]: any
 }
 
-defineProps<{ data: RecursiveData | RecursiveData[] }>()
+const props = defineProps<{ data: RecursiveData | RecursiveData[], label: string }>()
+
+const dataCopy = ref(JSON.parse(JSON.stringify(props.data)))
+
+watch(() => props.data, (newData) => {
+    dataCopy.value = JSON.parse(JSON.stringify(newData))
+}, { deep: true })
 </script>
