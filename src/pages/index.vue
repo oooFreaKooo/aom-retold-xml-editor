@@ -78,7 +78,7 @@
                     v-if="selectedUnit"
                     title="Protoaction Editor"
                     :proto-action-form-fields="protoActionsFields"
-                    :selected-unit-data="selectedUnit?.['protoaction']"
+                    :selected-unit-data="Array.isArray(selectedUnit?.['protoaction']) ? selectedUnit['protoaction'] : [selectedUnit?.['protoaction'] || {}]"
                 />
             </VCol>
         </v-expansion-panels>

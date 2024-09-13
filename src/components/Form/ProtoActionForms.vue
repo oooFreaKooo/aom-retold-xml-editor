@@ -8,7 +8,8 @@
                 variant="outlined"
                 clearable
             />
-
+            <p>selectedUnitData:{{ selectedUnitData }}</p>
+            <p>selectedAttributes: {{ selectedAttributes }}</p>
             <v-row v-if="selectedProtoAction">
                 <v-col
                     v-for="(tag, index) in categorizedPrototActions[selectedProtoAction]"
