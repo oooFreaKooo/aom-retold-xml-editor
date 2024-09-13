@@ -8,44 +8,22 @@
                 variant="outlined"
                 clearable
             />
-            <p>selectedUnitData:{{ selectedUnitData }}</p>
-            <p>selectedAttributes: {{ selectedAttributes }}</p>
             <v-row v-if="selectedProtoAction">
                 <v-col
                     v-for="(tag, index) in categorizedPrototActions[selectedProtoAction]"
                     :key="index"
                     cols="6"
                 >
-                    <v-text-field
-                        v-if="isTagWithContent(tag)"
-                        variant="outlined"
-                        density="compact"
-                        color="primary"
-                        :label="getFieldLabelByKey(getTagKey(tag))"
+                    <ProtoActionContent
+                        :get-field-label-by-key="getFieldLabelByKey"
+                        :get-tag-key="getTagKey"
+                        :tag="tag"
                     />
-
-                    <v-expansion-panels>
-                        <v-expansion-panel
-                            v-if="hasAttributes(tag)"
-                            :min-height="1"
-                        >
-                            <v-expansion-panel-title>{{ getFieldLabelByKey(getTagKey(tag)) }} Attributes</v-expansion-panel-title>
-                            <v-expansion-panel-text>
-                                <v-combobox
-                                    v-for="(attributeValues, attributeKey) in tag.attributes"
-                                    :key="attributeKey"
-                                    v-model="selectedAttributes[attributeKey]"
-                                    variant="outlined"
-                                    density="compact"
-                                    color="green-darken-3"
-                                    :items="Array.isArray(attributeValues) ? attributeValues : [attributeValues]"
-                                    :label="attributeKey"
-                                    :multiple="Array.isArray(attributeValues)"
-                                    @change="initializeSelectedAttributes(attributeKey, Array.isArray(attributeValues))"
-                                />
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
+                    <ProtoActionAttributes
+                        :get-tag-key="getTagKey"
+                        :get-field-label-by-key="getFieldLabelByKey"
+                        :tag="tag"
+                    />
                 </v-col>
             </v-row>
         </v-expansion-panel-text>
@@ -53,33 +31,18 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{
-    protoActionFormFields: ProtoActionField[]
-    selectedUnitData?: UnitDataItem[]
-}>()
-
 export interface UnitDataItem {
     [key: string]: any
     name?: string
 }
 
+const props = defineProps<{
+    protoActionFormFields: ProtoActionField[]
+    selectedUnitData?: UnitDataItem[]
+}>()
+
 const selectedProtoAction = ref<string | undefined>(undefined)
 const protoActionNames = computed(() => Object.keys(categorizedPrototActions))
-const selectedAttributes = ref<Record<string, string | number | boolean | Tag | string[] | number[] | boolean[] | Tag[] | undefined>>({})
-
-const initializeSelectedAttributes = (key: string, isMultiple: boolean) => {
-    if (!(key in selectedAttributes.value)) {
-        selectedAttributes.value[key] = isMultiple ? [] : undefined
-    }
-}
-
-const hasAttributes = (tag: any): tag is FullTag | AttributeTag => {
-    return tag && typeof tag === 'object' && 'attributes' in tag
-}
-
-const isTagWithContent = (tag: any): tag is FullTag | ContentTag => {
-    return tag && typeof tag === 'object' && 'content' in tag
-}
 
 const getFieldLabelByKey = (key: string) => {
     const field = protoActionsFields.value.find(field => field.key === key)
