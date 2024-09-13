@@ -6,7 +6,6 @@
         >
             <!-- If the value is an object or array, render it recursively -->
             <div v-if="typeof value === 'object' && value !== null">
-                <h4>{{ key }}</h4>
                 <RecursiveRenderer :data="value" />
             </div>
 

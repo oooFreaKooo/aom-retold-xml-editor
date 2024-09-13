@@ -87,14 +87,14 @@ const props = defineProps<{
     title: string
     formFields: { label: string, type: 'text' | 'select', options?: string[] }[]
     localStorageKey: string
-    selectedUnit: Record<string, any> | null
+    selectedUnit: Record<string, any> | undefined
 }>()
 
 const isClient = !import.meta.env.SSR
 const panelOpen = ref([true])
 const formValues = ref<Record<string, string>>({})
 const { commit, undo, redo, canUndo, canRedo } = useManualRefHistory(formValues, { clone: true })
-const activeField = ref<string | null>(null)
+const activeField = ref<string | undefined>(undefined)
 const snackbarVisible = ref(false)
 
 // Watch selectedUnit for changes and populate form fields

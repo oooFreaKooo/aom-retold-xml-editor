@@ -1,5 +1,5 @@
 <template>
-    <VRow class="mt-16">
+    <!--     <VRow class="mt-16">
         <v-expansion-panels
             v-model="panelOpen"
             multiple
@@ -38,14 +38,6 @@
                     local-storage-key="combatInformation"
                 />
             </VCol>
-            <VCol
-                cols="12"
-            >
-                <ProtoActionForms
-                    title="Protoaction Editor"
-                    :proto-action-form-fields="protoActionsFields"
-                />
-            </VCol>
             <VCol cols="12">
                 <SelectorWithChips
                     title="Unit Types"
@@ -64,42 +56,53 @@
                     storage-key="selectedFlagTypes"
                 />
             </VCol>
+            <VCol cols="12">
+                <ProtoActionForms
+                    title="Protoaction Editor"
+                    :proto-action-form-fields="protoActionsFields"
+                />
+                <p v-if="selectedUnit">
+                    {{ selectedUnit['@name'] }}
+                </p>
+            </VCol>
+        </v-expansion-panels>
+    </VRow> -->
+    <VRow class="mt-16">
+        <v-expansion-panels
+            v-model="panelOpen"
+            multiple
+            ripple
+        >
+            <VCol cols="12">
+                <ProtoActionForms
+                    v-if="selectedUnit"
+                    title="Protoaction Editor"
+                    :proto-action-form-fields="protoActionsFields"
+                    :selected-unit-data="selectedUnit?.['protoaction']"
+                />
+            </VCol>
         </v-expansion-panels>
     </VRow>
-    <div>
+    <div class="mt-16">
         <h1>Select Unit</h1>
-        <select
-            v-if="protoData"
-            @change="selectUnit($event)"
-        >
-            <option
-                v-for="unit in protoData"
-                :key="unit['unit@name']"
-                :value="unit['unit@name']"
-            >
-                {{ unit["unit@name"] }}
-            </option>
-        </select>
-        <div v-else>
-            Loading...
-        </div>
-
+        <v-combobox
+            v-if="unitData"
+            v-model="selectedUnitName"
+            :items="unitData.map((unit: Unit) => unit['@name'])"
+            label="Select Unit"
+        />
         <div v-if="selectedUnit">
-            <h2>Editing: {{ selectedUnit["unit@name"] }}</h2>
             <div>
-                <h2>Unit Configuration</h2>
                 <div
                     v-for="(value, key) in selectedUnit"
                     :key="key"
                 >
                     <label :for="String(key)">{{ key }}</label>
 
-                    <!-- Recursively render the nested object or array -->
                     <div v-if="Array.isArray(value) || typeof value === 'object'">
                         <RecursiveRenderer :data="value" />
                     </div>
 
-                    <!-- Render non-nested values as input -->
                     <input
                         v-else
                         :id="String(key)"
@@ -112,38 +115,31 @@
 </template>
 
 <script setup lang="ts">
-import ProtoActionForms from '~/components/Form/ProtoActionForms.vue'
-import SelectorWithChips from '~/components/Form/SelectorWithChips.vue'
-
 const panelOpen = ref([true])
 // Define Unit interface
 interface Unit {
-    'unit@name': string
+    '@name': string
     [key: string]: any
 }
 
-interface UnitItem {
+/* interface UnitItem {
     unittype?: string
     flag?: string
     [key: string]: any
-}
+} */
 
-const protoData = ref<Unit[] | null>(null)
-const selectedUnit = ref<Unit | null>(null)
+const unitData = ref<Unit[] | undefined>(undefined)
+const selectedUnit = ref<Unit | undefined>(undefined)
+const selectedUnitName = ref<string | undefined>(undefined)
 
 // Fetch the JSON file
-const { data } = await useFetch<{ proto: Unit[] }>('http://localhost:3000/units_data.json')
+const { data } = await useFetch<{ unit: Unit[] }>('http://localhost:3000/proto.json')
 
 if (data.value) {
-    protoData.value = data.value.proto
+    unitData.value = data.value.unit
 }
 
-function selectUnit (event: Event) {
-    const target = event.target as HTMLSelectElement
-    const selectedUnitName = target.value
-    const unit = protoData.value?.find(unit => unit['unit@name'] === selectedUnitName)
-    if (unit) {
-        selectedUnit.value = { ...unit }
-    }
-}
+watch(selectedUnitName, (newValue) => {
+    selectedUnit.value = unitData.value?.find(unit => unit['@name'] === newValue) || undefined
+})
 </script>

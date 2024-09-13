@@ -52,19 +52,23 @@
 </template>
 
 <script lang="ts" setup>
-defineProps({
-    protoActionsFields: {
-        type: Array as PropType<ProtoActionField[]>,
-    },
+const props = defineProps<{
+    protoActionFormFields: ProtoActionField[]
+    selectedUnitData?: UnitDataItem[]
+}>()
 
-})
-const selectedProtoAction = ref<string | null>(null)
-const protoActionNames = Object.keys(categorizedPrototActions)
-const selectedAttributes = ref<Record<string, string | number | boolean | Tag | string[] | number[] | boolean[] | Tag[] | null>>({})
+export interface UnitDataItem {
+    [key: string]: any
+    name?: string
+}
+
+const selectedProtoAction = ref<string | undefined>(undefined)
+const protoActionNames = computed(() => Object.keys(categorizedPrototActions))
+const selectedAttributes = ref<Record<string, string | number | boolean | Tag | string[] | number[] | boolean[] | Tag[] | undefined>>({})
 
 const initializeSelectedAttributes = (key: string, isMultiple: boolean) => {
     if (!(key in selectedAttributes.value)) {
-        selectedAttributes.value[key] = isMultiple ? [] : null
+        selectedAttributes.value[key] = isMultiple ? [] : undefined
     }
 }
 
@@ -86,6 +90,17 @@ const getTagKey = (tag: any) => {
         key => protoActionsTags[key] === tag,
     ) || 'unknown'
 }
+
+watch(
+    () => props.selectedUnitData,
+    (newVal) => {
+        const firstItemWithName = newVal?.find(item => typeof item.name === 'string')
+        if (firstItemWithName) {
+            selectedProtoAction.value = firstItemWithName.name
+        }
+    },
+    { immediate: true },
+)
 </script>
 
 <style>
