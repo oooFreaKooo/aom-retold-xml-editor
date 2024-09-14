@@ -73,12 +73,15 @@
             multiple
             ripple
         >
-            <VCol cols="12">
+            <VCol
+                v-for="(protoAction, index) in (Array.isArray(selectedUnit?.['protoaction']) ? selectedUnit['protoaction'] : [selectedUnit?.['protoaction'] || {}])"
+                :key="index"
+                cols="12"
+            >
                 <ProtoActionForms
-                    v-if="selectedUnit"
                     title="Protoaction Editor"
                     :proto-action-form-fields="protoActionsFields"
-                    :selected-unit-data="Array.isArray(selectedUnit?.['protoaction']) ? selectedUnit['protoaction'] : [selectedUnit?.['protoaction'] || {}]"
+                    :selected-unit-data="protoAction"
                 />
             </VCol>
         </v-expansion-panels>

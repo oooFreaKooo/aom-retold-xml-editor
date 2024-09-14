@@ -8,6 +8,7 @@
                 variant="outlined"
                 clearable
             />
+            {{ selectedUnitData }}
             <v-row v-if="selectedProtoAction">
                 <v-col
                     v-for="(tag, index) in categorizedPrototActions[selectedProtoAction]"
@@ -58,9 +59,8 @@ const getTagKey = (tag: any) => {
 watch(
     () => props.selectedUnitData,
     (newVal) => {
-        const firstItemWithName = newVal?.find(item => typeof item.name === 'string')
-        if (firstItemWithName) {
-            selectedProtoAction.value = firstItemWithName.name
+        if (newVal && typeof newVal === 'object' && 'name' in newVal) {
+            selectedProtoAction.value = newVal.name as string | undefined
         }
     },
     { immediate: true },
