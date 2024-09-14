@@ -1,11 +1,12 @@
 <template>
     <v-expansion-panels>
         <v-expansion-panel
-            v-if="hasAttributes(tag)"
+            v-if="hasAttributes(tag) || hasContent(tag)"
             :min-height="1"
         >
             <v-expansion-panel-title>{{ getFieldLabelByKey(getTagKey(tag)) }} Attributes</v-expansion-panel-title>
             <v-expansion-panel-text>
+                <!-- Render attribute fields -->
                 <v-combobox
                     v-for="(attributeValues, attributeKey) in tag.attributes"
                     :key="attributeKey"
@@ -17,6 +18,15 @@
                     :label="attributeKey"
                     :multiple="Array.isArray(attributeValues)"
                     @change="initializeSelectedAttributes(attributeKey, Array.isArray(attributeValues))"
+                />
+
+                <!-- Render content fields if present -->
+                <v-text-field
+                    v-if="hasContent(tag)"
+                    v-model="selectedContent"
+                    :label="getFieldLabelByKey(getTagKey(tag)) + ' Amount'"
+                    variant="outlined"
+                    density="compact"
                 />
             </v-expansion-panel-text>
         </v-expansion-panel>
@@ -31,10 +41,11 @@ export interface UnitDataItem {
 defineProps<{
     getFieldLabelByKey: (key: string) => string
     getTagKey: (tag: any) => string
-    tag: any
+    tag: AttributeTag
 }>()
 
 const selectedAttributes = ref<Record<string, string | number | boolean | Tag | string[] | number[] | boolean[] | Tag[] | undefined>>({})
+const selectedContent = ref<string | undefined>(undefined) // Added for content field
 
 const initializeSelectedAttributes = (key: string, isMultiple: boolean) => {
     if (!(key in selectedAttributes.value)) {
@@ -42,8 +53,13 @@ const initializeSelectedAttributes = (key: string, isMultiple: boolean) => {
     }
 }
 
-const hasAttributes = (tag: any): tag is FullTag | AttributeTag => {
+const hasAttributes = (tag: any): tag is AttributeTag => {
     return tag && typeof tag === 'object' && 'attributes' in tag
+}
+
+// New helper to check if the tag has content
+const hasContent = (tag: any): tag is ContentTag => {
+    return tag && typeof tag === 'object' && 'content' in tag
 }
 </script>
 

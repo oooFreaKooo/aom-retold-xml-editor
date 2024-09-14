@@ -1,4 +1,4 @@
-export const categorizedPrototActions = ref<{ [key: string]: TagContentValue[] }>({
+export const categorizedPrototActionNames = ref<{ [key: string]: TagContentValue[] }>({
     'HandAttack': [
         protoActionsTags.damage,
         protoActionsTags.damagebonus,

@@ -11,18 +11,20 @@
             {{ selectedUnitData }}
             <v-row v-if="selectedProtoAction">
                 <v-col
-                    v-for="(tag, index) in categorizedPrototActions[selectedProtoAction]"
+                    v-for="(tag, index) in categorizedPrototActionNames[selectedProtoAction]"
                     :key="index"
                     cols="6"
                 >
                     <ProtoActionContent
+                        v-if="isContentTag(tag) && !isAttributeTag(tag)"
                         :get-field-label-by-key="getFieldLabelByKey"
-                        :get-tag-key="getTagKey"
+                        :get-tag-key="getContentTagKey"
                         :tag="tag"
                     />
                     <ProtoActionAttributes
-                        :get-tag-key="getTagKey"
+                        v-else-if="isAttributeTag(tag)"
                         :get-field-label-by-key="getFieldLabelByKey"
+                        :get-tag-key="getAttributeTagKey"
                         :tag="tag"
                     />
                 </v-col>
@@ -43,17 +45,31 @@ const props = defineProps<{
 }>()
 
 const selectedProtoAction = ref<string | undefined>(undefined)
-const protoActionNames = computed(() => Object.keys(categorizedPrototActions))
+const protoActionNames = computed(() => Object.keys(categorizedPrototActionNames))
 
 const getFieldLabelByKey = (key: string) => {
     const field = protoActionsFields.value.find(field => field.key === key)
     return field ? field.label : 'Unknown Label'
 }
 
-const getTagKey = (tag: any) => {
+const getContentTagKey = (tag: ContentTag) => {
     return (Object.keys(protoActionsTags) as Array<keyof typeof protoActionsTags>).find(
         key => protoActionsTags[key] === tag,
     ) || 'unknown'
+}
+
+const getAttributeTagKey = (tag: AttributeTag) => {
+    return (Object.keys(protoActionsTags) as Array<keyof typeof protoActionsTags>).find(
+        key => protoActionsTags[key] === tag,
+    ) || 'unknown'
+}
+
+const isContentTag = (tag: any): tag is ContentTag => {
+    return tag && typeof tag === 'object' && 'content' in tag && !('attributes' in tag)
+}
+
+const isAttributeTag = (tag: any): tag is AttributeTag => {
+    return tag && typeof tag === 'object' && 'attributes' in tag
 }
 
 watch(

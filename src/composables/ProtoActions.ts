@@ -1,26 +1,15 @@
-// Allow individual strings and numbers, in addition to arrays and nested tags
 export type TagContentValue = string | number | boolean | string[] | number[] | Tag | null
 
-// A tag that has both attributes and content
-export interface FullTag {
-    attributes: Record<string, TagContentValue>
-    content: Record<string, TagContentValue>
-}
-
-// A tag that has only content
 export interface ContentTag {
     content: Record<string, TagContentValue>
 }
 
-// A tag that has only attributes
 export interface AttributeTag {
     attributes: Record<string, TagContentValue>
 }
 
-// Recursive Tag type
-export type Tag = FullTag | ContentTag | AttributeTag
+export type Tag = ContentTag | AttributeTag
 
-// ProtoActionField can now handle nested Tag structures
 export interface ProtoActionField {
     label: string
     type: Tag
@@ -31,14 +20,14 @@ export const protoActionsTags = ref({
     name: {
         attributes: protoActionNameAttributes,
         content: protoActionNameContent,
-    } as FullTag,
+    } as AttributeTag,
 
     damagebonus: {
         attributes: protoActionDamagebonusAttributes,
         content: {
             number: true,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     modifyamount: {
         content: {
@@ -65,14 +54,14 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     rate: {
         attributes: protoActionRateAttributes,
         content: {
             number: true,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     type: {
         content: {
@@ -155,7 +144,7 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     minrange: {
         content: {
@@ -176,7 +165,7 @@ export const protoActionsTags = ref({
                 content: {
                     number: true,
                 },
-            } as FullTag,
+            } as AttributeTag,
         },
     } as ContentTag,
 
@@ -267,7 +256,7 @@ export const protoActionsTags = ref({
                 content: {
                     number: '0',
                 },
-            } as FullTag,
+            } as AttributeTag,
             modifyramp: {
                 attributes: {
                     type: [ 'Damage', 'Speed' ],
@@ -275,9 +264,9 @@ export const protoActionsTags = ref({
                     final: '0',
                 },
                 content: {},
-            } as FullTag,
+            } as AttributeTag,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     modify: {
         attributes: {
@@ -296,7 +285,7 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     workonfrozenunits: {
         content: {
@@ -397,7 +386,7 @@ export const protoActionsTags = ref({
     conversionprotoid: {
         attributes: protoActionConversionprotoidAttributes,
         content: protoActionConversionprotoidContent,
-    } as FullTag,
+    } as AttributeTag,
 
     active: {
         content: {
@@ -498,7 +487,7 @@ export const protoActionsTags = ref({
         content: {
             number: true,
         },
-    } as FullTag,
+    } as AttributeTag,
 
     modifytype: {
         content: {
@@ -569,7 +558,7 @@ export const protoActionsTags = ref({
             final: '0',
         },
         content: {},
-    } as FullTag,
+    } as AttributeTag,
 
     modelattachment: {
         content: {
