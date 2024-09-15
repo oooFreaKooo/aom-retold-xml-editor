@@ -9,6 +9,18 @@
                 clearable
             />
             {{ selectedUnitData }}
+            <v-row v-if="selectedProtoAction && !Array.isArray(selectedUnitData) && selectedUnitData?.onhiteffect">
+                <v-col
+                    v-for="(effect, index) in selectedUnitData.onhiteffect"
+                    :key="index"
+                    cols="12"
+                >
+                    <OnhitEffect
+                        v-if="isEffectItem(effect)"
+                        :effect="effect"
+                    />
+                </v-col>
+            </v-row>
             <v-row v-if="selectedProtoAction">
                 <v-col
                     v-for="(tag, index) in categorizedPrototActionNames[selectedProtoAction]"
@@ -16,15 +28,15 @@
                     cols="6"
                 >
                     <ProtoActionContent
-                        v-if="isContentTag(tag) && !isAttributeTag(tag)"
+                        v-if="isContentTag(tag) && !isAttributeTag(tag) && !isOnHitEffectTag(tag)"
                         :get-field-label-by-key="getFieldLabelByKey"
-                        :get-tag-key="getContentTagKey"
+                        :get-tag-key="getTagKey"
                         :tag="tag"
                     />
                     <ProtoActionAttributes
-                        v-else-if="isAttributeTag(tag)"
+                        v-else-if="isAttributeTag(tag) && !isOnHitEffectTag(tag)"
                         :get-field-label-by-key="getFieldLabelByKey"
-                        :get-tag-key="getAttributeTagKey"
+                        :get-tag-key="getTagKey"
                         :tag="tag"
                     />
                 </v-col>
@@ -34,14 +46,16 @@
 </template>
 
 <script lang="ts" setup>
+import type { EffectItem } from '../Items/OnhitEffect.vue'
+
 export interface UnitDataItem {
     [key: string]: any
     name?: string
+    onhiteffect?: Array<{ [key: string]: any }>
 }
 
 const props = defineProps<{
-    protoActionFormFields: ProtoActionField[]
-    selectedUnitData?: UnitDataItem[]
+    selectedUnitData?: UnitDataItem | UnitDataItem[]
 }>()
 
 const selectedProtoAction = ref<string | undefined>(undefined)
@@ -52,13 +66,7 @@ const getFieldLabelByKey = (key: string) => {
     return field ? field.label : 'Unknown Label'
 }
 
-const getContentTagKey = (tag: ContentTag) => {
-    return (Object.keys(protoActionsTags) as Array<keyof typeof protoActionsTags>).find(
-        key => protoActionsTags[key] === tag,
-    ) || 'unknown'
-}
-
-const getAttributeTagKey = (tag: AttributeTag) => {
+const getTagKey = (tag: any) => {
     return (Object.keys(protoActionsTags) as Array<keyof typeof protoActionsTags>).find(
         key => protoActionsTags[key] === tag,
     ) || 'unknown'
@@ -70,6 +78,40 @@ const isContentTag = (tag: any): tag is ContentTag => {
 
 const isAttributeTag = (tag: any): tag is AttributeTag => {
     return tag && typeof tag === 'object' && 'attributes' in tag
+}
+
+function isEffectItem (effect: any): effect is EffectItem {
+    return effect && typeof effect === 'object' && '@type' in effect
+}
+
+const isOnHitEffectTag = (tag: any): boolean => {
+    const onHitEffectTypes = [
+        'AnimOverride',
+        'Attach',
+        'Boost',
+        'DamageOverTime',
+        'Freeze',
+        'Lifesteal',
+        'MutateNature',
+        'ProgFreeze',
+        'ProgFreezeROF',
+        'ProgFreezeSpeed',
+        'ProgShading',
+        'Pull',
+        'Reincarnation',
+        'SelfModify',
+        'Shading',
+        'ShadingFade',
+        'Snare',
+        'StatModify',
+        'Stun',
+        'Throw',
+        'TreeFlatten',
+    ]
+    if (tag?.attributes?.type) {
+        return tag.attributes.type.some((type: string) => onHitEffectTypes.includes(type))
+    }
+    return false
 }
 
 watch(

@@ -80,7 +80,6 @@
             >
                 <ProtoActionForms
                     title="Protoaction Editor"
-                    :proto-action-form-fields="protoActionsFields"
                     :selected-unit-data="protoAction"
                 />
             </VCol>

@@ -14,10 +14,10 @@
 defineProps<{
     getFieldLabelByKey: (key: string) => string
     getTagKey: (tag: any) => string
-    tag: any
+    tag?: ContentTag | string[]
 }>()
 
-const isTagWithContent = (tag: any): tag is FullTag | ContentTag => {
+const isTagWithContent = (tag: any): tag is ContentTag => {
     return tag && typeof tag === 'object' && 'content' in tag
 }
 </script>

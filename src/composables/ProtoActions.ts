@@ -1,4 +1,14 @@
-export type TagContentValue = string | number | boolean | string[] | number[] | Tag | null
+export type TagContentValue =
+    boolean
+    | null
+    | number
+    | number[]
+    | string
+    | string[]
+    | Tag
+    | { content: string[] | number[] }
+    | { number: boolean }
+    | { string: boolean }
 
 export interface ContentTag {
     content: Record<string, TagContentValue>
@@ -6,6 +16,7 @@ export interface ContentTag {
 
 export interface AttributeTag {
     attributes: Record<string, TagContentValue>
+    content?: Record<string, TagContentValue>
 }
 
 export type Tag = ContentTag | AttributeTag
@@ -195,48 +206,79 @@ export const protoActionsTags = ref({
                 'TreeFlatten',
             ],
             freezetype: [ 'StoneDamage', 'default' ],
-            duration: '0',
-            damage: '0',
-            rate: '0',
-            targetunittype: [
-                'Building',
-                'EconomicUnit',
-                'Herdable',
-                'Hero',
-                'HumanSoldier',
-                'Huntable',
-                'LogicalTypeHandUnitsAttack',
-                'LogicalTypeMythUnitNotTitan',
-                'LogicalTypeShipNotHero',
-                'LogicalTypeVillagerNotHero',
-                'NonConvertableHerdable',
-                'Ship',
-                'Tree',
-                'Unit',
-                'WildCrops',
-            ],
-            dmgtype: [
-                'Crush', 'Divine', 'Pierce',
-            ],
-            proto: [
-                'Chicken',
-                'MinionReincarnated',
-                'VFXBleed',
-                'VFXCaladriaPacify',
-                'VFXChaos',
-                'VFXCold',
-                'VFXFenirTreeFire',
-                'VFXPoison',
-            ],
-            attachbone: [ 'spine', 'vfx_top' ],
-            radius: '0',
-            shadingtype: [ 'burning', 'frost' ],
-            fadetime: '0',
-            factor: '0',
-            active: '0',
-            freezeduration: '0',
-            anim: ['Burning'],
-            deadonly: '0',
+            duration: {
+                content: {
+                    number: true,
+                },
+            },
+            damage: {
+                content: {
+                    number: true,
+                },
+            },
+            rate: {
+                content: {
+                    number: true,
+                },
+            },
+            targetunittype: {
+                content: [
+                    'Building', 'EconomicUnit', 'Herdable', 'Hero', 'HumanSoldier',
+                    'Huntable', 'LogicalTypeHandUnitsAttack', 'LogicalTypeMythUnitNotTitan',
+                    'LogicalTypeShipNotHero', 'LogicalTypeVillagerNotHero', 'NonConvertableHerdable',
+                    'Ship', 'Tree', 'Unit', 'WildCrops',
+                ],
+            },
+            dmgtype: {
+                content: [
+                    'Crush', 'Divine', 'Pierce',
+                ],
+            },
+            proto: {
+                content: [
+                    'Chicken', 'MinionReincarnated', 'VFXBleed', 'VFXCaladriaPacify',
+                    'VFXChaos', 'VFXCold', 'VFXFenirTreeFire', 'VFXPoison',
+                ],
+            },
+            attachbone: {
+                content: [ 'spine', 'vfx_top' ],
+            },
+            radius: {
+                content: {
+                    number: true,
+                },
+            },
+            shadingtype: {
+                content: [ 'burning', 'frost' ],
+            },
+            fadetime: {
+                content: {
+                    number: true,
+                },
+            },
+            factor: {
+                content: {
+                    number: true,
+                },
+            },
+            active: {
+                content: {
+                    number: true,
+                },
+            },
+            freezeduration: {
+                content: {
+                    number: true,
+                },
+            },
+            anim: {
+                content: ['Burning'],
+            },
+            deadonly: {
+                content: {
+                    number: true,
+                },
+            },
         },
         content: {
             modify: {
@@ -254,17 +296,16 @@ export const protoActionsTags = ref({
                     ],
                 },
                 content: {
-                    number: '0',
+                    number: true,
                 },
-            } as AttributeTag,
+            },
             modifyramp: {
                 attributes: {
                     type: [ 'Damage', 'Speed' ],
-                    init: '0',
-                    final: '0',
+                    init: { number: true },
+                    final: { number: true },
                 },
-                content: {},
-            } as AttributeTag,
+            },
         },
     } as AttributeTag,
 

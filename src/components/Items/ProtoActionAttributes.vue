@@ -6,7 +6,6 @@
         >
             <v-expansion-panel-title>{{ getFieldLabelByKey(getTagKey(tag)) }} Attributes</v-expansion-panel-title>
             <v-expansion-panel-text>
-                <!-- Render attribute fields -->
                 <v-combobox
                     v-for="(attributeValues, attributeKey) in tag.attributes"
                     :key="attributeKey"
@@ -19,8 +18,6 @@
                     :multiple="Array.isArray(attributeValues)"
                     @change="initializeSelectedAttributes(attributeKey, Array.isArray(attributeValues))"
                 />
-
-                <!-- Render content fields if present -->
                 <v-text-field
                     v-if="hasContent(tag)"
                     v-model="selectedContent"
@@ -34,10 +31,6 @@
 </template>
 
 <script lang="ts" setup>
-export interface UnitDataItem {
-    [key: string]: any
-    name?: string
-}
 defineProps<{
     getFieldLabelByKey: (key: string) => string
     getTagKey: (tag: any) => string
@@ -45,7 +38,8 @@ defineProps<{
 }>()
 
 const selectedAttributes = ref<Record<string, string | number | boolean | Tag | string[] | number[] | boolean[] | Tag[] | undefined>>({})
-const selectedContent = ref<string | undefined>(undefined) // Added for content field
+
+const selectedContent = ref<string | undefined>(undefined)
 
 const initializeSelectedAttributes = (key: string, isMultiple: boolean) => {
     if (!(key in selectedAttributes.value)) {
@@ -57,7 +51,6 @@ const hasAttributes = (tag: any): tag is AttributeTag => {
     return tag && typeof tag === 'object' && 'attributes' in tag
 }
 
-// New helper to check if the tag has content
 const hasContent = (tag: any): tag is ContentTag => {
     return tag && typeof tag === 'object' && 'content' in tag
 }
