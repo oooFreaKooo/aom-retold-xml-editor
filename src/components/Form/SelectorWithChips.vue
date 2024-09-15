@@ -1,6 +1,8 @@
 <template>
     <v-expansion-panel>
-        <v-expansion-panel-title>{{ title }}</v-expansion-panel-title>
+        <v-expansion-panel-title class="section-title">
+            {{ title }}
+        </v-expansion-panel-title>
         <v-expansion-panel-text>
             <VRow>
                 <VCol
@@ -172,4 +174,10 @@ const saveAndClose = () => {
 watch(searchQuery, filterItems)
 </script>
 
-<style></style>
+<style scoped>
+  .section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+</style>

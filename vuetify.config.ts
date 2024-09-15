@@ -32,37 +32,39 @@ export default defineVuetifyConfiguration({
             light: {
                 dark: false,
                 colors: {
-                    background: '#F8F9FA', // Light gray for background
-                    surface: '#FFFFFF', // White for card and surface elements
-                    primary: '#7289DA', // Discord's signature blue
-                    secondary: '#99AAB5', // Light grayish blue for secondary elements
-                    accent: '#5865F2', // More saturated blue for accent elements
-                    error: '#F04747', // Bright red for errors
-                    info: '#7289DA', // Blue for info elements (same as primary)
-                    success: '#43B581', // Green for success states
-                    warning: '#FAA61A', // Yellow for warnings
-                    text: '#2C2F33', // Dark gray for readable text on white backgrounds
-                    disabled: '#DCDDDE', // Light gray for disabled elements
+                    background: '#FFFFFF',
+                    potato: '#FDD835',
+                    surface: '#F2F2F2',
+                    primary: '#6200EE',
+                    secondary: '#018786',
+                    accent: '#03DAC6',
+                    error: '#B00020',
+                    info: '#2196F3',
+                    success: '#4CAF50',
+                    warning: '#FB8C00',
+                    text: '#000000',
+                    disabled: '#9E9E9E',
                 },
             },
             dark: {
                 dark: true,
                 colors: {
-                    background: '#36393F', // Dark gray for the background
-                    surface: '#2F3136', // Slightly lighter gray for surfaces
-                    primary: '#7289DA', // Discord's blue for primary elements
-                    secondary: '#99AAB5', // Light grayish blue for secondary elements
-                    accent: '#5865F2', // Brighter blue for accent elements
-                    error: '#F04747', // Bright red for errors
-                    info: '#7289DA', // Blue for info elements (same as primary)
-                    success: '#43B581', // Green for success states
-                    warning: '#FAA61A', // Yellow for warnings
-                    text: '#FFFFFF', // White text for readability on dark surfaces
-                    disabled: '#4F545C', // Darker gray for disabled elements
+                    background: '#121212',
+                    surface: '#1E1E1E',
+                    primary: '#BB86FC',
+                    secondary: '#03DAC6',
+                    accent: '#03DAC6',
+                    error: '#CF6679',
+                    info: '#2196F3',
+                    success: '#4CAF50',
+                    warning: '#FB8C00',
+                    text: '#FFFFFF',
+                    disabled: '#616161',
                 },
             },
         },
     },
+
     date: {
         adapter: 'vuetify',
     },

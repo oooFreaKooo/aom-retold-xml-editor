@@ -1,7 +1,23 @@
 <template>
     <div>
         <v-text-field
-            v-if="isTagWithContent(tag)"
+            v-if="isTagWithContent(tag) && !Array.isArray(tag.content)"
+            variant="outlined"
+            density="compact"
+            color="primary"
+            :label="getFieldLabelByKey(getTagKey(tag))"
+        />
+        <v-select
+            v-else-if="isTagWithContent(tag) && Array.isArray(tag.content)"
+            :items="tag.content"
+            variant="outlined"
+            density="compact"
+            color="primary"
+            :label="getFieldLabelByKey(getTagKey(tag))"
+        />
+        <v-select
+            v-else-if="Array.isArray(tag)"
+            :items="tag"
             variant="outlined"
             density="compact"
             color="primary"
@@ -18,7 +34,7 @@ defineProps<{
 }>()
 
 const isTagWithContent = (tag: any): tag is ContentTag => {
-    return tag && typeof tag === 'object' && 'content' in tag
+    return (tag && typeof tag === 'object' && 'content' in tag)
 }
 </script>
 

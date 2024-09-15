@@ -1,72 +1,4 @@
 <template>
-    <!--     <VRow class="mt-16">
-        <v-expansion-panels
-            v-model="panelOpen"
-            multiple
-            ripple
-        >
-            <VCol
-                cols="12"
-                md="6"
-            >
-                <DynamicForms
-                    title="Basic Information"
-                    :form-fields="basicInformationFields"
-                    :selected-unit="selectedUnit"
-                    local-storage-key="basicInformation"
-                />
-            </VCol>
-            <VCol
-                cols="12"
-                md="6"
-            >
-                <DynamicForms
-                    title="Movement Information"
-                    :form-fields="movementInformationFields"
-                    :selected-unit="selectedUnit"
-                    local-storage-key="movementInformation"
-                />
-            </VCol>
-            <VCol
-                cols="12"
-                md="6"
-            >
-                <DynamicForms
-                    title="Combat/Stats"
-                    :form-fields="unitCombatFields"
-                    :selected-unit="selectedUnit"
-                    local-storage-key="combatInformation"
-                />
-            </VCol>
-            <VCol cols="12">
-                <SelectorWithChips
-                    title="Unit Types"
-                    :unit-types="selectedUnit?.unit.filter((item: UnitItem) => item.unittype).map((item: UnitItem) => item.unittype) || []"
-                    :categorized-items="categorizedUnitTypes"
-                    search-label="Search unit types"
-                    storage-key="selectedUnitTypes"
-                />
-            </VCol>
-            <VCol cols="12">
-                <SelectorWithChips
-                    title="Flag Types"
-                    :unit-flags="selectedUnit?.unit.filter((item: UnitItem) => item.flag).map((item: UnitItem) => item.flag) || []"
-                    :categorized-items="categorizedFlagTypes"
-                    search-label="Search flag types"
-                    storage-key="selectedFlagTypes"
-                />
-            </VCol>
-            <VCol cols="12">
-                <ProtoActionForms
-                    title="Protoaction Editor"
-                    :proto-action-form-fields="protoActionsFields"
-                />
-                <p v-if="selectedUnit">
-                    {{ selectedUnit['@name'] }}
-                </p>
-            </VCol>
-        </v-expansion-panels>
-    </VRow> -->
     <VRow class="mt-16">
         <v-expansion-panels
             v-model="panelOpen"
@@ -74,12 +6,38 @@
             ripple
         >
             <VCol
+                cols="12"
+                md="12"
+            >
+                <DynamicForms
+                    :sections="formSections.map(section => ({
+                        ...section,
+                        formFields: section.formFields.value,
+                    }))"
+                    :selected-unit="selectedUnit"
+                />
+                <SelectorWithChips
+                    title="Unit Types"
+                    :unit-types="selectedUnit?.unit?.filter((item: UnitItem) => item.unittype)?.map((item: UnitItem) => item.unittype) || []"
+                    :categorized-items="categorizedUnitTypes"
+                    search-label="Search unit types"
+                    storage-key="selectedUnitTypes"
+                />
+                <SelectorWithChips
+                    title="Flag Types"
+                    :unit-flags="selectedUnit?.unit?.filter((item: UnitItem) => item.flag)?.map((item: UnitItem) => item.flag) || []"
+                    :categorized-items="categorizedFlagTypes"
+                    search-label="Search flag types"
+                    storage-key="selectedFlagTypes"
+                />
+            </VCol>
+
+            <VCol
                 v-for="(protoAction, index) in (Array.isArray(selectedUnit?.['protoaction']) ? selectedUnit['protoaction'] : [selectedUnit?.['protoaction'] || {}])"
                 :key="index"
                 cols="12"
             >
                 <ProtoActionForms
-                    title="Protoaction Editor"
                     :selected-unit-data="protoAction"
                 />
             </VCol>
@@ -124,11 +82,11 @@ interface Unit {
     [key: string]: any
 }
 
-/* interface UnitItem {
+interface UnitItem {
     unittype?: string
     flag?: string
     [key: string]: any
-} */
+}
 
 const unitData = ref<Unit[] | undefined>(undefined)
 const selectedUnit = ref<Unit | undefined>(undefined)
@@ -140,6 +98,24 @@ const { data } = await useFetch<{ unit: Unit[] }>('http://localhost:3000/proto.j
 if (data.value) {
     unitData.value = data.value.unit
 }
+
+const formSections = [
+    {
+        title: 'Basic Information',
+        localStorageKey: 'basicInformation',
+        formFields: basicInformationFields,
+    },
+    {
+        title: 'Movement Information',
+        localStorageKey: 'movementInformation',
+        formFields: movementInformationFields,
+    },
+    {
+        title: 'Combat/Stats',
+        localStorageKey: 'combatInformation',
+        formFields: unitCombatFields,
+    },
+]
 
 watch(selectedUnitName, (newValue) => {
     selectedUnit.value = unitData.value?.find(unit => unit['@name'] === newValue) || undefined

@@ -1,5 +1,10 @@
 <template>
-    <v-expansion-panel>
+    <v-expansion-panel
+        :min-height="1"
+    >
+        <v-expansion-panel-title class="section-title">
+            Proto Actions
+        </v-expansion-panel-title>
         <v-expansion-panel-text>
             <v-select
                 v-model="selectedProtoAction"
@@ -8,7 +13,6 @@
                 variant="outlined"
                 clearable
             />
-            {{ selectedUnitData }}
             <v-row v-if="selectedProtoAction && !Array.isArray(selectedUnitData) && selectedUnitData?.onhiteffect">
                 <v-col
                     v-for="(effect, index) in selectedUnitData.onhiteffect"
@@ -25,10 +29,10 @@
                 <v-col
                     v-for="(tag, index) in categorizedPrototActionNames[selectedProtoAction]"
                     :key="index"
-                    cols="6"
+                    cols="3"
                 >
                     <ProtoActionContent
-                        v-if="isContentTag(tag) && !isAttributeTag(tag) && !isOnHitEffectTag(tag)"
+                        v-if="isContentTag(tag) && !isAttributeTag(tag)"
                         :get-field-label-by-key="getFieldLabelByKey"
                         :get-tag-key="getTagKey"
                         :tag="tag"
@@ -73,7 +77,7 @@ const getTagKey = (tag: any) => {
 }
 
 const isContentTag = (tag: any): tag is ContentTag => {
-    return tag && typeof tag === 'object' && 'content' in tag && !('attributes' in tag)
+    return Array.isArray(tag) || (tag && typeof tag === 'object' && 'content' in tag && !('attributes' in tag))
 }
 
 const isAttributeTag = (tag: any): tag is AttributeTag => {
@@ -125,6 +129,10 @@ watch(
 )
 </script>
 
-<style>
-
+<style scoped>
+.section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 </style>
