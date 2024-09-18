@@ -1,9 +1,8 @@
 <template>
     <div class="parallax-container">
         <AppHeader />
-        <ModelRender />
         <Particles />
-        <TypedText />
+        <ModelRender />
     </div>
     <v-row
         justify="center"

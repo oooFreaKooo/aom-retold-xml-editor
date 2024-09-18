@@ -1,7 +1,10 @@
 <template>
-    <v-container class="fill-height">
+    <v-container
+        height="50vh"
+        width="100%"
+        class="d-flex align-center justify-center"
+    >
         <v-row
-            align="center"
             justify="center"
         >
             <v-col

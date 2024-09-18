@@ -1,9 +1,6 @@
 <template>
     <v-container>
-        <h1
-            class="text-h2 mb-10 text-center font-weight-bold"
-            style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
-        >
+        <h1 class="text-h2 mb-10 text-center font-weight-bold gradient-text">
             My Creative Journey
         </h1>
         <v-row class="position-relative">
@@ -15,6 +12,7 @@
             <v-col
                 v-for="(item, index) in timelineItems"
                 :key="index"
+                :ref="el => setTimelineItemRef(el, index)"
                 cols="12"
                 class="d-flex timeline-item"
                 :class="index % 2 === 0 ? 'timeline-left' : 'timeline-right'"
@@ -80,26 +78,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-onMounted(() => {
-    nextTick(() => {
-        const items = document.querySelectorAll('.timeline-item')
+interface TimelineItem {
+    date: string
+    icon: string
+    title: string
+    description: string
+    skills: string[]
+    link: string
+}
 
-        items.forEach((item) => {
-            gsap.to(item, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none reverse',
-                },
-            })
-        })
-    })
-})
-
-const timelineItems = [
+const timelineItems: TimelineItem[] = [
     {
         date: '2018',
         icon: 'mdi-school',
@@ -161,9 +149,48 @@ const timelineItems = [
         link: 'https://myportfolio.com/current-role',
     },
 ]
+
+// Define refs as an array of Ref<Element | ComponentPublicInstance | null>
+const timelineItemRefs = ref<(Element | ComponentPublicInstance | null)[]>([])
+
+const setTimelineItemRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+    timelineItemRefs.value[index] = el
+}
+
+onMounted(() => {
+    nextTick(() => {
+        timelineItemRefs.value.forEach((ref) => {
+            let element: Element | null = null
+
+            if (ref instanceof Element) {
+                element = ref
+            } else if (ref && '$el' in ref) {
+                element = (ref as ComponentPublicInstance).$el as Element
+            } else if (element) {
+                gsap.to(element, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top bottom-=100',
+                        toggleActions: 'play none none reverse',
+                    },
+                })
+            }
+        })
+    })
+})
 </script>
 
 <style scoped>
+.gradient-text {
+  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .gradient-timeline {
   background: linear-gradient(180deg, #6a11cb 0%, #2575fc 100%);
   width: 4px;
@@ -196,36 +223,15 @@ const timelineItems = [
 
 .timeline-content.left {
   margin-right: auto;
-  transform: translateX(-40%);
 }
 
 .timeline-content.right {
   margin-left: auto;
-  transform: translateX(40%);
 }
 
 .timeline-item {
   margin-bottom: 4rem;
   position: relative;
-}
-
-.timeline-date {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: white;
-  border-radius: 30px;
-  padding: 0.75rem;
-  font-weight: bold;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.timeline-left .timeline-icon {
-  right: auto;
-  left: calc(50%);
-}
-
-.timeline-right .timeline-icon {
-  left: calc(50%);
 }
 
 @media (max-width: 768px) {
@@ -234,10 +240,9 @@ const timelineItems = [
     transform: none !important;
   }
 
-.timeline-left .timeline-content {
-  right: auto;
-  left: calc(10%);
-}
+  .timeline-left .timeline-content {
+    left: calc(10%);
+  }
 
   .timeline-icon {
     left: 20px !important;
