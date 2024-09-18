@@ -1,5 +1,8 @@
 <template>
-    <v-card style="z-index: 2">
+    <v-card
+        style="z-index: 2"
+        class="mb-16"
+    >
         <v-row>
             <v-app-bar
                 color="primary"

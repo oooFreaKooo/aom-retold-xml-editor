@@ -1,5 +1,5 @@
 <template>
-    <VRow class="mt-16">
+    <VRow class="mt-4">
         <v-expansion-panels
             v-model="panelOpen"
             multiple
