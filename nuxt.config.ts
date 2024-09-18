@@ -8,6 +8,7 @@ export default defineNuxtConfig({
         '@nuxt/image',
         'vuetify-nuxt-module',
         '@nuxt/eslint',
+        'nuxt-particles',
     ],
     vuetify: {
         moduleOptions: {
