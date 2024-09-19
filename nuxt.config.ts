@@ -30,6 +30,10 @@ export default defineNuxtConfig({
             // styles: { configFile: 'assets/custom-vuetify.scss' },
         },
     },
+    particles: {
+        mode: 'slim', // 'full' | 'slim' | 'basic' | 'custom'
+    },
+
     vite: {
         clearScreen: false,
         build: {

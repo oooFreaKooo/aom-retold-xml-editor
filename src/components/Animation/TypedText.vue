@@ -12,7 +12,7 @@
                 md="8"
                 class="text-center"
             >
-                <h1 class="text-h2 font-weight-bold mb-4">
+                <h1 class="text-h2 font-weight-bold mb-14">
                     <span id="typed-output" />
                 </h1>
                 <p class="text-h5">
@@ -91,8 +91,8 @@ onMounted(() => {
             start: 'top bottom-=100',
             end: 'top center',
             scrub: true,
-            onEnter: () => gsap.to(target, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }),
-            onLeaveBack: () => gsap.to(target, { opacity: 0, y: 100, duration: 1 }),
+            onEnter: () => gsap.to(target, { opacity: 1, y: 0, duration: 2, ease: 'power3.out' }),
+            onLeaveBack: () => gsap.to(target, { opacity: 0, y: 100, duration: 2 }),
         })
     })
 })

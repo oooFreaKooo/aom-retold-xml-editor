@@ -10,7 +10,7 @@
             <div
                 v-for="skill in skills"
                 :key="skill.name"
-                class="skill-item"
+                class="skill-item border"
             >
                 <SkillsCard v-bind="skill" />
             </div>
@@ -33,13 +33,11 @@ const skills = [
 .skill-item {
   text-align: center;
   padding: 20px;
-  background: rgba(255,255,255,0.1);
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 .skill-item:hover {
   transform: translateY(-5px);
-  background: rgba(255,255,255,0.2);
 }
 .custom-font {
   font-family: 'Inter', sans-serif;

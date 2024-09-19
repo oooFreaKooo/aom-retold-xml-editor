@@ -4,12 +4,16 @@
         <v-row>
             <v-col cols="12">
                 <v-img
+                    rounded="xl"
                     src="https://picsum.photos/1200/600"
                     alt="A panoramic view of a vibrant cityscape at sunset, showcasing modern architecture and natural beauty"
                     class="custom-image"
                 />
             </v-col>
         </v-row>
+        <div class="my-16">
+            <div style="height: 10px;" />
+        </div>
         <v-row class="mt-8">
             <v-col
                 cols="12"

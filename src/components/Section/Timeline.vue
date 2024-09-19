@@ -1,8 +1,15 @@
 <template>
     <v-container>
-        <h1 class="text-h2 mb-10 text-center font-weight-bold gradient-text">
+        <div class="my-16">
+            <div style="height: 160px;" />
+        </div>
+
+        <h1 class="text-h2 my-16 text-center font-weight-bold gradient-text">
             My Creative Journey
         </h1>
+        <div class="my-16">
+            <div style="height: 60px;" />
+        </div>
         <v-row class="position-relative">
             <v-divider
                 vertical
@@ -19,7 +26,7 @@
             >
                 <v-icon
                     color="white"
-                    class="timeline-icon"
+                    class="timeline-icon bg-info pa-6"
                     size="large"
                 >
                     {{ item.icon }}
@@ -55,7 +62,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-btn
-                            color="primary"
+                            color="info"
                             variant="elevated"
                             :href="item.link"
                             target="_blank"
@@ -170,10 +177,10 @@ onMounted(() => {
                 gsap.to(element, {
                     opacity: 1,
                     y: 0,
-                    duration: 0.5,
+                    duration: 0.75,
                     scrollTrigger: {
                         trigger: element,
-                        start: 'top bottom-=100',
+                        start: 'top bottom-=200',
                         toggleActions: 'play none none reverse',
                     },
                 })
@@ -184,15 +191,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.gradient-text {
-  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .gradient-timeline {
-  background: linear-gradient(180deg, #6a11cb 0%, #2575fc 100%);
   width: 4px;
   height: 100%;
   position: absolute;
@@ -201,7 +200,6 @@ onMounted(() => {
 }
 
 .timeline-icon {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   padding: 16px;
   border-radius: 50%;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
